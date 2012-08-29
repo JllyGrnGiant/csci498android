@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 public class LunchList extends Activity {
 
@@ -16,9 +17,22 @@ public class LunchList extends Activity {
 		public void onClick(View v) {
 			EditText name    = (EditText) findViewById(R.id.name);
 			EditText address = (EditText) findViewById(R.id.addr);
+			RadioGroup types = (RadioGroup) findViewById(R.id.types);
 			
 			r.setName(name.getText().toString());
 			r.setAddress(address.getText().toString());
+			
+			switch (types.getCheckedRadioButtonId()) {
+				case R.id.sit_down:
+					r.setType("sit_down");
+					break;
+				case R.id.take_out:
+					r.setType("take_out");
+					break;
+			    case R.id.delivery:
+					r.setType("delivery");
+					break;
+			}
 		}
 		
 	};
