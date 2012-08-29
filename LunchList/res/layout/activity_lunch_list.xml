@@ -15,6 +15,8 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#006600"
             android:text="Name:" />
 
         <EditText
@@ -22,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textStyle="italic"
             android:ems="10" >
 
             <requestFocus />
@@ -41,6 +44,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#006600"
             android:text="Address:" />
 
         <EditText
@@ -48,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textStyle="italic"
             android:ems="10" />
 
     </LinearLayout>
