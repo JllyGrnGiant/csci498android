@@ -8,16 +8,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 public class LunchList extends Activity {
 
 	private List<Restaurant> model           = new ArrayList<Restaurant>();
 	private ArrayAdapter<Restaurant> adapter = null;
+	ArrayAdapter<String> addressSuggestions  = null;
     private View.OnClickListener onSave      = new View.OnClickListener() {
 		
 		@Override
@@ -31,18 +32,19 @@ public class LunchList extends Activity {
 			r.setAddress(address.getText().toString());
 			
 			switch (types.getCheckedRadioButtonId()) {
-				case 1:
+				case R.id.sit_down:
 					r.setType("sit_down");
 					break;
-				case 2:
+				case R.id.take_out:
 					r.setType("take_out");
 					break;
-			    case 3:
+			    case R.id.delivery:
 					r.setType("delivery");
 					break;
 			}
 			
 			adapter.add(r);
+			addressSuggestions.add(r.getAddress());
 		}
 		
 	};
@@ -52,29 +54,16 @@ public class LunchList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lunch_list);
         
-        RadioButton sitDown = new RadioButton(this);
-        sitDown.setText("Sit-Down");
-        sitDown.setId(1);
-        sitDown.setChecked(true);
-        RadioButton takeOut = new RadioButton(this);
-        takeOut.setText("Take-Out");
-        takeOut.setId(2);
-        RadioButton delivery = new RadioButton(this);
-        delivery.setText("Delivery");
-        delivery.setId(3);
-        
-        RadioGroup types = (RadioGroup) findViewById(R.id.types);
-        types.addView(sitDown);
-        types.addView(takeOut);
-        types.addView(delivery);
+        AutoCompleteTextView addressView = (AutoCompleteTextView) findViewById(R.id.addr);
+        addressSuggestions = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
+        addressView.setAdapter(addressSuggestions);
         
         Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(onSave);
         
-        ListView list = (ListView) findViewById(R.id.restaurants);
-        
+        Spinner list = (Spinner) findViewById(R.id.restaurants);
         adapter = new ArrayAdapter<Restaurant>(this,
-        		android.R.layout.simple_list_item_1,
+        		android.R.layout.simple_spinner_item,
         		model
         );
         list.setAdapter(adapter);
