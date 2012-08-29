@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class LunchList extends Activity {
@@ -23,13 +24,13 @@ public class LunchList extends Activity {
 			r.setAddress(address.getText().toString());
 			
 			switch (types.getCheckedRadioButtonId()) {
-				case R.id.sit_down:
+				case 1:
 					r.setType("sit_down");
 					break;
-				case R.id.take_out:
+				case 2:
 					r.setType("take_out");
 					break;
-			    case R.id.delivery:
+			    case 3:
 					r.setType("delivery");
 					break;
 			}
@@ -41,6 +42,22 @@ public class LunchList extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lunch_list);
+        
+        RadioButton sitDown = new RadioButton(this);
+        sitDown.setText("Sit-Down");
+        sitDown.setId(1);
+        sitDown.setSelected(true);
+        RadioButton takeOut = new RadioButton(this);
+        takeOut.setText("Take-Out");
+        takeOut.setId(2);
+        RadioButton delivery = new RadioButton(this);
+        delivery.setText("Delivery");
+        delivery.setId(3);
+        
+        RadioGroup types = (RadioGroup) findViewById(R.id.types);
+        types.addView(sitDown);
+        types.addView(takeOut);
+        types.addView(delivery);
         
         Button save = (Button) findViewById(R.id.save);
         
