@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LunchList"
-            android:label="@string/title_activity_lunch_list" >
+            android:label="@string/title_activity_lunch_list"
+            android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

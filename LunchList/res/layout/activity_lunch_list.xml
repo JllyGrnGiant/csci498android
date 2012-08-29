@@ -1,12 +1,16 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
+ 
 	<TableLayout
+	    android:id="@+id/details"
 	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:stretchColumns="1" >
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:stretchColumns="1"
+	    android:shrinkColumns="1" >
 	
 	    <TableRow>
 	
@@ -53,55 +57,6 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content" >
 	
-	            <RadioButton
-	                android:id="@+id/radio0"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:checked="true"
-	                android:text="RadioButton" />
-	
-	            <RadioButton
-	                android:id="@+id/radio1"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="RadioButton" />
-	
-	            <RadioButton
-	                android:id="@+id/radio2"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="RadioButton" />
-	
-	            <RadioButton
-	                android:id="@+id/radioButton1"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="RadioButton" />
-	
-	            <RadioButton
-	                android:id="@+id/radioButton2"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="RadioButton" />
-	
-	            <RadioButton
-	                android:id="@+id/radioButton3"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="RadioButton" />
-	
-	            <RadioButton
-	                android:id="@+id/radioButton4"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="RadioButton" />
-	
-	            <RadioButton
-	                android:id="@+id/radioButton5"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="RadioButton" />
-	
 	        </RadioGroup>
 	
 	    </TableRow>
@@ -114,5 +69,13 @@
 	        android:text="Save" />
 	
 	</TableLayout>
+	
+    <ListView
+        android:id="@+id/restaurants"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
-</ScrollView>
+</RelativeLayout>
