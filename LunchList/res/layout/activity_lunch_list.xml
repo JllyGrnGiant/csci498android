@@ -1,62 +1,118 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:stretchColumns="1" >
+    android:layout_height="match_parent" >
+    
+	<TableLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:stretchColumns="1" >
+	
+	    <TableRow>
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:text="Name:"
+	            android:textColor="#006600"
+	            android:textStyle="bold" />
+	
+	        <EditText
+	            android:id="@+id/name"
+	            android:textStyle="italic" />
+	    </TableRow>
+	
+	    <TableRow>
+	
+	        <TextView
+	            android:id="@+id/textView2"
+	            android:text="Address:"
+	            android:textColor="#006600"
+	            android:textStyle="bold" />
+	
+	        <EditText
+	            android:id="@+id/addr"
+	            android:textStyle="italic" />
+	
+	    </TableRow>
+	
+	    <TableRow
+	        android:id="@+id/tableRow1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:id="@+id/textView3"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="#006600"
+	            android:textStyle="bold"
+	            android:text="Type:" />
+	
+	        <RadioGroup
+	            android:id="@+id/types"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" >
+	
+	            <RadioButton
+	                android:id="@+id/radio0"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:checked="true"
+	                android:text="RadioButton" />
+	
+	            <RadioButton
+	                android:id="@+id/radio1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="RadioButton" />
+	
+	            <RadioButton
+	                android:id="@+id/radio2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="RadioButton" />
+	
+	            <RadioButton
+	                android:id="@+id/radioButton1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="RadioButton" />
+	
+	            <RadioButton
+	                android:id="@+id/radioButton2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="RadioButton" />
+	
+	            <RadioButton
+	                android:id="@+id/radioButton3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="RadioButton" />
+	
+	            <RadioButton
+	                android:id="@+id/radioButton4"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="RadioButton" />
+	
+	            <RadioButton
+	                android:id="@+id/radioButton5"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="RadioButton" />
+	
+	        </RadioGroup>
+	
+	    </TableRow>
+	
+	    <Button
+	        android:id="@+id/save"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/linearLayout2"
+	        android:text="Save" />
+	
+	</TableLayout>
 
-    <TableRow>
-
-        <TextView
-            android:id="@+id/textView1"
-            android:text="Name:"
-            android:textColor="#006600"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/name"
-            android:textStyle="italic" />
-    </TableRow>
-
-    <TableRow>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:text="Address:"
-            android:textColor="#006600"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/addr"
-            android:textStyle="italic" />
-
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#006600"
-            android:textStyle="bold"
-            android:text="Type:" />
-
-        <RadioGroup
-            android:id="@+id/types"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </RadioGroup>
-
-    </TableRow>
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout2"
-        android:text="Save" />
-
-</TableLayout>
+</ScrollView>
