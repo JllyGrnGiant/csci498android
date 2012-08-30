@@ -1,10 +1,9 @@
+package csci498.lunchlist;
+
 /**
  * Restaurant models a restaurant by holding information about the
  * restaurant's name, address, and establishment type (e.g. sit-down)
  */
-
-package csci498.lunchlist;
-
 public class Restaurant {
 
 	private String name;

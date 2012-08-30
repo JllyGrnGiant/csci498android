@@ -1,8 +1,3 @@
-/**
- * The LunchList activity provides a form for users to enter and store
- * restaurant information and displays that information in a list
- */
-
 package csci498.lunchlist;
 
 import java.util.ArrayList;
@@ -10,19 +5,27 @@ import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
+/**
+ * The LunchList activity provides a form for users to enter and store
+ * restaurant information and displays that information in a list
+ */
 public class LunchList extends Activity {
 
 	private List<Restaurant> model                   = new ArrayList<Restaurant>();
-	private RestaurantAdapter adapter    = null;
+	private RestaurantAdapter adapter                = null;
 	private ArrayAdapter<String> addressSuggestions  = null;
     
 	private View.OnClickListener onSave = new View.OnClickListener() {
@@ -55,11 +58,66 @@ public class LunchList extends Activity {
 		
 	};
 	
+	/**
+	 * A container for restaurant name, address, and icon resources
+	 */
+	private static class RestaurantHolder {
+		private TextView name    = null;
+		private TextView address = null;
+		private ImageView icon   = null;
+		
+		RestaurantHolder(View row) {
+			name    = (TextView) row.findViewById(R.id.title);
+			address = (TextView) row.findViewById(R.id.address);
+			icon    = (ImageView) row.findViewById(R.id.icon);
+		}
+		
+		void populateFrom(Restaurant r) {
+			name.setText(r.getName());
+			address.setText(r.getAddress());
+			
+			if (r.getType().equals("sit_down")) {
+				icon.setImageResource(R.drawable.ball_green);
+			}
+			else if (r.getType().equals("take_out")) {
+				icon.setImageResource(R.drawable.ball_yellow);
+			}
+			else {
+				icon.setImageResource(R.drawable.ball_red);
+			}
+		}
+	}
+	
+	/**
+	 * A custom adapter for displaying restaurant information stored
+	 * in RestaurantHolder objects
+	 */
 	private class RestaurantAdapter extends ArrayAdapter<Restaurant> {
 		public RestaurantAdapter() {
 			super(LunchList.this,
 				android.R.layout.simple_list_item_1,
 				model);
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View row = convertView;
+			RestaurantHolder holder = null;
+			
+			if (row == null) {
+				LayoutInflater inflater = getLayoutInflater();
+				
+				row    = inflater.inflate(R.layout.row, null);
+				holder = new RestaurantHolder(row);
+				row.setTag(holder);
+			}
+			else {
+				holder = (RestaurantHolder) row.getTag();
+			}
+			
+			holder.populateFrom(model.get(position));
+			
+			return row;
 		}
 	}
 
@@ -76,7 +134,7 @@ public class LunchList extends Activity {
         save.setOnClickListener(onSave);
         
         ListView list = (ListView) findViewById(R.id.restaurants);
-        adapter = new RestaurantAdapter();
+        adapter       = new RestaurantAdapter();
         list.setAdapter(adapter);
     }
     
