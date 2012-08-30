@@ -87,12 +87,12 @@
 	
 	</TableLayout>
 	
-    <Spinner
+    <ListView
         android:id="@+id/restaurants"
         android:layout_alignParentTop="true"
         android:layout_above="@id/details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-    </Spinner>
+    </ListView>
 
 </RelativeLayout>

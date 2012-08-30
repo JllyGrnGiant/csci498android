@@ -1,3 +1,8 @@
+/**
+ * The LunchList activity provides a form for users to enter and store
+ * restaurant information and displays that information in a list
+ */
+
 package csci498.lunchlist;
 
 import java.util.ArrayList;
@@ -11,15 +16,16 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 
 public class LunchList extends Activity {
 
-	private List<Restaurant> model           = new ArrayList<Restaurant>();
-	private ArrayAdapter<Restaurant> adapter = null;
-	ArrayAdapter<String> addressSuggestions  = null;
-    private View.OnClickListener onSave      = new View.OnClickListener() {
+	private List<Restaurant> model                   = new ArrayList<Restaurant>();
+	private RestaurantAdapter adapter    = null;
+	private ArrayAdapter<String> addressSuggestions  = null;
+    
+	private View.OnClickListener onSave = new View.OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
@@ -48,6 +54,14 @@ public class LunchList extends Activity {
 		}
 		
 	};
+	
+	private class RestaurantAdapter extends ArrayAdapter<Restaurant> {
+		public RestaurantAdapter() {
+			super(LunchList.this,
+				android.R.layout.simple_list_item_1,
+				model);
+		}
+	}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,11 +75,8 @@ public class LunchList extends Activity {
         Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(onSave);
         
-        Spinner list = (Spinner) findViewById(R.id.restaurants);
-        adapter = new ArrayAdapter<Restaurant>(this,
-        		android.R.layout.simple_spinner_item,
-        		model
-        );
+        ListView list = (ListView) findViewById(R.id.restaurants);
+        adapter = new RestaurantAdapter();
         list.setAdapter(adapter);
     }
     
