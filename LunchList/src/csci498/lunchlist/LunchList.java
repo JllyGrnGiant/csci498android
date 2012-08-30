@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -76,15 +77,15 @@ public class LunchList extends Activity {
 			name.setText(r.getName());
 			address.setText(r.getAddress());
 			
-			if (r.getType().equals("sit_down")) {
-				icon.setImageResource(R.drawable.ball_green);
-			}
-			else if (r.getType().equals("take_out")) {
-				icon.setImageResource(R.drawable.ball_yellow);
-			}
-			else {
-				icon.setImageResource(R.drawable.ball_red);
-			}
+			if (name.getText().length() > 6)
+				{ name.setTextColor(Color.RED); }
+			
+			if (r.getType().equals("sit_down"))
+				{ icon.setImageResource(R.drawable.ball_green); }
+			else if (r.getType().equals("take_out"))
+				{ icon.setImageResource(R.drawable.ball_yellow); }
+			else
+				{ icon.setImageResource(R.drawable.ball_red); }
 		}
 	}
 	
@@ -107,7 +108,16 @@ public class LunchList extends Activity {
 			if (row == null) {
 				LayoutInflater inflater = getLayoutInflater();
 				
-				row    = inflater.inflate(R.layout.row, null);
+				String type = model.get(position).getType();
+				if (type.equals("sit_down"))
+					{ row = inflater.inflate(R.layout.sit_down_row, null); }
+				else if (type.equals("take_out"))
+					{ row = inflater.inflate(R.layout.take_out_row, null); }
+				else if (type.equals("delivery"))
+					{ row = inflater.inflate(R.layout.delivery_row, null); }
+				else
+					{ row = inflater.inflate(android.R.layout.simple_list_item_1, null); }
+
 				holder = new RestaurantHolder(row);
 				row.setTag(holder);
 			}
@@ -118,6 +128,24 @@ public class LunchList extends Activity {
 			holder.populateFrom(model.get(position));
 			
 			return row;
+		}
+		
+		@Override
+		public int getItemViewType(int position) {
+			String type = model.get(position).getType();
+			if (type.equals("sit_down")) 
+				{ return 0; }
+			else if (type.equals("take_out"))
+				{ return 1; }
+			else if (type.equals("delivery"))
+				{ return 2; }
+			else
+				{ return 3; }
+		}
+		
+		@Override
+		public int getViewTypeCount() {
+			return 4;
 		}
 	}
 
