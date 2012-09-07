@@ -57,7 +57,7 @@
 			            android:textStyle="italic" />
 			
 			    </TableRow>
-			
+			    
 			    <TableRow
 			        android:id="@+id/tableRow1"
 			        android:layout_width="wrap_content"

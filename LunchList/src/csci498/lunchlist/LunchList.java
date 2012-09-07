@@ -38,7 +38,7 @@ public class LunchList extends TabActivity {
 		
 		@Override
 		public void onClick(View v) {
-			Restaurant r     = new Restaurant();
+			Restaurant r = new Restaurant();
 			
 			r.setName(name.getText().toString());
 			r.setAddress(address.getText().toString());
@@ -77,6 +77,8 @@ public class LunchList extends TabActivity {
 			else {
 				types.check(R.id.delivery);
 			}
+			
+			getTabHost().setCurrentTab(1);
 		}
     };
 	
