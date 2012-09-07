@@ -3,7 +3,7 @@ package csci498.lunchlist;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
+import android.app.TabActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ import android.widget.TextView;
  * The LunchList activity provides a form for users to enter and store
  * restaurant information and displays that information in a list
  */
-public class LunchList extends Activity {
+public class LunchList extends TabActivity {
 
 	private List<Restaurant> model                   = new ArrayList<Restaurant>();
 	private RestaurantAdapter adapter                = null;
