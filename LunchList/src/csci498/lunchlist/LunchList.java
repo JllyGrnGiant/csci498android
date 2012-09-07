@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.TabActivity;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -183,5 +184,4 @@ public class LunchList extends TabActivity {
         getMenuInflater().inflate(R.menu.activity_lunch_list, menu);
         return true;
     }
-    
 }

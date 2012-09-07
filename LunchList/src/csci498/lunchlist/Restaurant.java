@@ -11,7 +11,6 @@ public class Restaurant {
 	private String name;
 	private String address;
 	private String type;
-	private Date   date;
 	
 	public Restaurant() {
 		name    = "";
@@ -40,14 +39,6 @@ public class Restaurant {
 	
 	public void setType(final String type) {
 		this.type = type;
-	}
-	
-	public void setDate(final Date date) {
-		this.date = date;
-	}
-	
-	public Date getDate() {
-		return date;
 	}
 	
 	@Override
