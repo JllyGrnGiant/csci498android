@@ -107,17 +107,7 @@ public class LunchList extends Activity {
 			
 			if (row == null) {
 				LayoutInflater inflater = getLayoutInflater();
-				
-				String type = model.get(position).getType();
-				if (type.equals("sit_down"))
-					{ row = inflater.inflate(R.layout.sit_down_row, null); }
-				else if (type.equals("take_out"))
-					{ row = inflater.inflate(R.layout.take_out_row, null); }
-				else if (type.equals("delivery"))
-					{ row = inflater.inflate(R.layout.delivery_row, null); }
-				else
-					{ row = inflater.inflate(android.R.layout.simple_list_item_1, null); }
-
+				row = inflater.inflate(R.layout.restaurant_layout, null);
 				holder = new RestaurantHolder(row);
 				row.setTag(holder);
 			}
@@ -128,24 +118,6 @@ public class LunchList extends Activity {
 			holder.populateFrom(model.get(position));
 			
 			return row;
-		}
-		
-		@Override
-		public int getItemViewType(int position) {
-			String type = model.get(position).getType();
-			if (type.equals("sit_down")) 
-				{ return 0; }
-			else if (type.equals("take_out"))
-				{ return 1; }
-			else if (type.equals("delivery"))
-				{ return 2; }
-			else
-				{ return 3; }
-		}
-		
-		@Override
-		public int getViewTypeCount() {
-			return 4;
 		}
 	}
 
