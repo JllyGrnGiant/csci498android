@@ -184,4 +184,9 @@ public class LunchList extends TabActivity {
         getMenuInflater().inflate(R.menu.activity_lunch_list, menu);
         return true;
     }
+    
+    public void showDatePickerDialog(View v) {
+    	DialogFragment fragment = new DatePickerFragment();
+    	fragment.show((FragmentManager) null, "datePicker");
+    }
 }
