@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -29,14 +30,14 @@ public class LunchList extends TabActivity {
 	private List<Restaurant> model                   = new ArrayList<Restaurant>();
 	private RestaurantAdapter adapter                = null;
 	private ArrayAdapter<String> addressSuggestions  = null;
+	private EditText name                            = null;
+	private EditText address                         = null;
+	private RadioGroup types                         = null;
     
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
-			EditText name    = (EditText) findViewById(R.id.name);
-			EditText address = (EditText) findViewById(R.id.addr);
-			RadioGroup types = (RadioGroup) findViewById(R.id.types);
 			Restaurant r     = new Restaurant();
 			
 			r.setName(name.getText().toString());
@@ -60,6 +61,25 @@ public class LunchList extends TabActivity {
 		
 	};
 	
+	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			Restaurant r = model.get(position);
+			
+			name.setText(r.getName());
+			address.setText(r.getAddress());
+			
+			if (r.getType().equals("sit_down")) {
+				types.check(R.id.sit_down);
+			}
+			else if (r.getType().equals("take_out")) {
+				types.check(R.id.take_out);
+			}
+			else {
+				types.check(R.id.delivery);
+			}
+		}
+    };
+	
 	/**
 	 * A container for restaurant name, address, and icon resources
 	 */
@@ -77,9 +97,6 @@ public class LunchList extends TabActivity {
 		void populateFrom(Restaurant r) {
 			name.setText(r.getName());
 			address.setText(r.getAddress());
-			
-			if (name.getText().length() > 6)
-				{ name.setTextColor(Color.RED); }
 			
 			if (r.getType().equals("sit_down"))
 				{ icon.setImageResource(R.drawable.ball_green); }
@@ -127,6 +144,10 @@ public class LunchList extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lunch_list);
         
+		name    = (EditText) findViewById(R.id.name);
+		address = (EditText) findViewById(R.id.addr);
+		types   = (RadioGroup) findViewById(R.id.types);
+        
         AutoCompleteTextView addressView = (AutoCompleteTextView) findViewById(R.id.addr);
         addressSuggestions = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
         addressView.setAdapter(addressSuggestions);
@@ -137,6 +158,7 @@ public class LunchList extends TabActivity {
         ListView list = (ListView) findViewById(R.id.restaurants);
         adapter       = new RestaurantAdapter();
         list.setAdapter(adapter);
+        list.setOnItemClickListener(onListClick);
         
         TabHost.TabSpec spec = getTabHost().newTabSpec("tag1");
         
