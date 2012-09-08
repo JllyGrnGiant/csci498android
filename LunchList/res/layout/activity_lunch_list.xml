@@ -57,16 +57,6 @@
 			            android:textStyle="italic" />
 			
 			    </TableRow>
-			    
-			    <TableRow>
- 
-			        <Button 
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:text="Pick Last Visited Date"
-			            android:onClick="showDatePickerDialog" />
-
-			    </TableRow>
 
 			    <TableRow
 			        android:id="@+id/tableRow1"
@@ -107,7 +97,30 @@
 			        </RadioGroup>
 		
 			    </TableRow>
-			
+			    
+			    <LinearLayout
+			        android:orientation="horizontal"
+       				android:layout_width="match_parent"
+       				android:layout_height="match_parent" >
+					
+					<Button 
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:text="Last Visited Date"
+			            android:onClick="showDatePickerDialog" />
+			        
+			        <TextView
+			            android:id="@+id/dateText"
+			            android:layout_width="fill_parent"
+			            android:gravity="right"
+			            android:layout_height="wrap_content"
+			            android:text=""
+			            android:textSize="15pt"
+			            android:textColor="#006600"
+			            android:textStyle="bold" />
+			        				    
+			    </LinearLayout>
+		    
 			    <Button
 			        android:id="@+id/save"
 			        android:layout_width="match_parent"

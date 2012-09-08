@@ -4,9 +4,10 @@ import java.util.Calendar;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.widget.DatePicker;
+import android.widget.TextView;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 	
@@ -28,6 +29,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-		// TODO Auto-generated method stub	
+		TextView dateText = (TextView) getActivity().findViewById(R.id.dateText);
+		dateText.setText(monthOfYear + "/" + dayOfMonth + "/" + year);
 	}
 }

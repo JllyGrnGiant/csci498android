@@ -6,7 +6,6 @@ import java.util.List;
 import android.app.TabActivity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -33,6 +32,7 @@ public class LunchList extends TabActivity {
 	private ArrayAdapter<String> addressSuggestions  = null;
 	private EditText name                            = null;
 	private EditText address                         = null;
+	private TextView dateText                        = null;
 	private RadioGroup types                         = null;
     
 	private View.OnClickListener onSave = new View.OnClickListener() {
@@ -43,6 +43,7 @@ public class LunchList extends TabActivity {
 			
 			r.setName(name.getText().toString());
 			r.setAddress(address.getText().toString());
+			r.setDate(dateText.getText().toString());
 			
 			switch (types.getCheckedRadioButtonId()) {
 				case R.id.sit_down:
@@ -68,6 +69,7 @@ public class LunchList extends TabActivity {
 			
 			name.setText(r.getName());
 			address.setText(r.getAddress());
+			dateText.setText(r.getDate());
 			
 			if (r.getType().equals("sit_down")) {
 				types.check(R.id.sit_down);
@@ -87,19 +89,22 @@ public class LunchList extends TabActivity {
 	 * A container for restaurant name, address, and icon resources
 	 */
 	private static class RestaurantHolder {
-		private TextView name    = null;
-		private TextView address = null;
-		private ImageView icon   = null;
+		private TextView name     = null;
+		private TextView address  = null;
+		private TextView dateText = null;
+		private ImageView icon    = null;
 		
 		RestaurantHolder(View row) {
-			name    = (TextView) row.findViewById(R.id.title);
-			address = (TextView) row.findViewById(R.id.address);
-			icon    = (ImageView) row.findViewById(R.id.icon);
+			name     = (TextView) row.findViewById(R.id.title);
+			address  = (TextView) row.findViewById(R.id.address);
+			dateText = (TextView) row.findViewById(R.id.date);
+			icon     = (ImageView) row.findViewById(R.id.icon);
 		}
 		
 		void populateFrom(Restaurant r) {
 			name.setText(r.getName());
 			address.setText(r.getAddress());
+			dateText.setText(r.getDate());
 			
 			if (r.getType().equals("sit_down"))
 				{ icon.setImageResource(R.drawable.ball_green); }
@@ -147,9 +152,10 @@ public class LunchList extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lunch_list);
         
-		name    = (EditText) findViewById(R.id.name);
-		address = (EditText) findViewById(R.id.addr);
-		types   = (RadioGroup) findViewById(R.id.types);
+		name     = (EditText) findViewById(R.id.name);
+		address  = (EditText) findViewById(R.id.addr);
+		dateText = (TextView) findViewById(R.id.dateText);
+		types    = (RadioGroup) findViewById(R.id.types);
         
         AutoCompleteTextView addressView = (AutoCompleteTextView) findViewById(R.id.addr);
         addressSuggestions = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
@@ -186,7 +192,7 @@ public class LunchList extends TabActivity {
     }
     
     public void showDatePickerDialog(View v) {
-    	DialogFragment fragment = new DatePickerFragment();
-    	fragment.show((FragmentManager) null, "datePicker");
+    	DatePickerFragment fragment = new DatePickerFragment();
+    	fragment.show(getFragmentManager(), "tag");
     }
 }
