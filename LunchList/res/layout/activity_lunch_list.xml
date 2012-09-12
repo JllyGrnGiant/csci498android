@@ -94,10 +94,26 @@
 			                android:layout_width="wrap_content"
 			                android:layout_height="wrap_content"
 			                android:text="Delivery" />
+			            
 			        </RadioGroup>
 		
 			    </TableRow>
 			
+			    <TableRow>
+			        
+			        <TextView android:text="Notes:" />
+			        
+			        <EditText android:id="@+id/notes"
+			            android:singleLine="false"
+			            android:gravity="top"
+			            android:lines="2"
+			            android:scrollHorizontally="false"
+			            android:maxLines="2"
+			            android:maxWidth="200sp"
+			        />
+			        
+			    </TableRow>
+			    
 			    <Button
 			        android:id="@+id/save"
 			        android:layout_width="match_parent"

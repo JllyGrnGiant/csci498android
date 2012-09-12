@@ -11,12 +11,23 @@ public class Restaurant {
 	private String name;
 	private String address;
 	private String type;
+	private String notes;
 	
 	public Restaurant() {
 		name    = "";
 		address = "";
+		type    = "";
+		notes   = "";
 	}
 	
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(final String notes) {
+		this.notes = notes;
+	}
+
 	public String getName() {
 		return name;
 	}

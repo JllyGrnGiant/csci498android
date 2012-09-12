@@ -34,45 +34,46 @@ public class LunchList extends TabActivity {
 	private EditText name                            = null;
 	private EditText address                         = null;
 	private RadioGroup types                         = null;
+	private Restaurant current                       = null;
     
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
-			Restaurant r = new Restaurant();
+			current = new Restaurant();
 			
-			r.setName(name.getText().toString());
-			r.setAddress(address.getText().toString());
+			current.setName(name.getText().toString());
+			current.setAddress(address.getText().toString());
 			
 			switch (types.getCheckedRadioButtonId()) {
 				case R.id.sit_down:
-					r.setType("sit_down");
+					current.setType("sit_down");
 					break;
 				case R.id.take_out:
-					r.setType("take_out");
+					current.setType("take_out");
 					break;
 			    case R.id.delivery:
-					r.setType("delivery");
+			    	current.setType("delivery");
 					break;
 			}
 			
-			adapter.add(r);
-			addressSuggestions.add(r.getAddress());
+			adapter.add(current);
+			addressSuggestions.add(current.getAddress());
 		}
 		
 	};
 	
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			Restaurant r = model.get(position);
+			current = model.get(position);
 			
-			name.setText(r.getName());
-			address.setText(r.getAddress());
+			name.setText(current.getName());
+			address.setText(current.getAddress());
 			
-			if (r.getType().equals("sit_down")) {
+			if (current.getType().equals("sit_down")) {
 				types.check(R.id.sit_down);
 			}
-			else if (r.getType().equals("take_out")) {
+			else if (current.getType().equals("take_out")) {
 				types.check(R.id.take_out);
 			}
 			else {
@@ -181,7 +182,7 @@ public class LunchList extends TabActivity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_lunch_list, menu);
-        return true;
+        getMenuInflater().inflate(R.menu.option, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
