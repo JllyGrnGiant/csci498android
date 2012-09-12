@@ -3,10 +3,9 @@ package csci498.lunchlist;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +21,6 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * The LunchList activity provides a form for users to enter and store
@@ -201,7 +199,7 @@ public class LunchList extends TabActivity {
     			message = current.getNotes();
     		}
     		
-    		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    		new AlertDialog.Builder(this).setMessage(message).show();
     		
     		return true;
     	}
