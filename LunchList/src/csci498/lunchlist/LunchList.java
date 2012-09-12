@@ -188,8 +188,21 @@ public class LunchList extends TabActivity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.option, menu);
-        return super.onCreateOptionsMenu(menu);
+    	return super.onCreateOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	menu.clear();
+    	
+    	if (getTabHost().getCurrentTab() == 0) {
+    		getMenuInflater().inflate(R.menu.option_list, menu);
+    	}
+    	else {
+    		getMenuInflater().inflate(R.menu.option_details, menu);
+    	}
+    	
+        return super.onPrepareOptionsMenu(menu);
     }
     
     @Override
@@ -204,6 +217,12 @@ public class LunchList extends TabActivity {
     		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     		
     		return true;
+    	}
+    	else if (item.getItemId() == R.id.menu_details) {
+    		getTabHost().setCurrentTab(1);
+    	}
+    	else if (item.getItemId() == R.id.menu_list) {
+    		getTabHost().setCurrentTab(0);
     	}
     	
     	return super.onOptionsItemSelected(item);

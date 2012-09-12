@@ -1,0 +1,5 @@
+
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:id="@+id/toast" android:title="Raise Toast" android:icon="@drawable/toast"></item>
+        <item android:id="@+id/menu_list" android:title="List" android:icon="@drawable/list"></item>
+    </menu>
