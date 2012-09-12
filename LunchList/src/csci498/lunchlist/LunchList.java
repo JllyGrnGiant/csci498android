@@ -2,7 +2,9 @@ package csci498.lunchlist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
+import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -39,11 +41,40 @@ public class LunchList extends TabActivity {
 	private Restaurant current                       = null;
 	private EditText notes                           = null;
 	private int progress;
+	private LinkedBlockingQueue<Runnable> queue      = new LinkedBlockingQueue<Runnable>();
+	private boolean continueMonitoring               = true;
     
-	private Runnable longTask = new Runnable() {
+	private Runnable monitor = new Runnable() {
 		
 		@Override
 		public void run() {
+			while (continueMonitoring) {
+				try {
+					new Thread(queue.take()).start();
+				}
+				catch (InterruptedException e) {
+					new AlertDialog.Builder(LunchList.this).setMessage(e.getMessage()).show();
+				}
+			}
+		}
+		
+	};
+	
+	private Runnable fakeJob = new Runnable() {
+		
+		@Override
+		public void run() {
+			if (!continueMonitoring) {
+				return;
+			}
+			
+			runOnUiThread(new Runnable() {
+				public void run() {
+					setProgressBarVisibility(true);
+				}
+			});
+			
+			progress = 0;
 			for (int i=0; i<20; ++i) {
 				doSomeLongWork(500);
 			}
@@ -53,6 +84,15 @@ public class LunchList extends TabActivity {
 					setProgressBarVisibility(false);
 				}
 			});
+		}
+		
+	};
+	
+	private Runnable killJob = new Runnable() {
+		
+		@Override
+		public void run() {
+			continueMonitoring = false;
 		}
 		
 	};
@@ -203,6 +243,8 @@ public class LunchList extends TabActivity {
         getTabHost().addTab(spec);
         
         getTabHost().setCurrentTab(0);
+        
+        new Thread(monitor).start();
     }
     
     @Override
@@ -225,9 +267,28 @@ public class LunchList extends TabActivity {
     		return true;
     	}
     	else if (item.getItemId() == R.id.run) {
-    		setProgressBarVisibility(true);
-    		progress = 0;
-    		new Thread(longTask).start();
+    		try {
+				queue.put(fakeJob);
+			}
+    		catch (InterruptedException e) {
+    			new AlertDialog.Builder(LunchList.this).setMessage(e.getMessage()).show();
+			}
+			catch (Exception e) {
+				new AlertDialog.Builder(LunchList.this).setMessage(e.getMessage()).show();
+			}
+    		
+    		return true;
+    	}
+    	else if (item.getItemId() == R.id.kill) {
+    		try {
+				queue.put(killJob);
+			}
+    		catch (InterruptedException e) {
+    			new AlertDialog.Builder(LunchList.this).setMessage(e.getMessage()).show();
+			}
+			catch (Exception e) {
+				new AlertDialog.Builder(LunchList.this).setMessage(e.getMessage()).show();
+			}
     		
     		return true;
     	}
