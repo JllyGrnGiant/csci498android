@@ -3,6 +3,7 @@ package csci498.lunchlist;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -188,6 +189,17 @@ public class LunchList extends TabActivity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+    	try {
+    		int a = 1/0;
+    	}
+    	catch (ArithmeticException e) {
+    		new AlertDialog.Builder(this).
+    			setMessage(e.getMessage()).
+    			setTitle("Arithmetic Exception").
+    			show();
+    	}
+    	
+    	
         getMenuInflater().inflate(R.menu.option, menu);
         return super.onCreateOptionsMenu(menu);
     }
