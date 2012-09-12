@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.TabActivity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -44,6 +45,14 @@ public class LunchList extends TabActivity {
 		
 		@Override
 		public void run() {
+			final TextView title = (TextView) findViewById(android.R.id.title);
+			
+			runOnUiThread(new Runnable() {
+				public void run() {
+					title.setTextColor(Color.RED);
+				}
+			});
+			
 			for (int i=0; i<20; ++i) {
 				doSomeLongWork(500);
 			}
@@ -51,6 +60,7 @@ public class LunchList extends TabActivity {
 			runOnUiThread(new Runnable() {
 				public void run() {
 					setProgressBarVisibility(false);
+					title.setTextColor(Color.GREEN);
 				}
 			});
 		}
