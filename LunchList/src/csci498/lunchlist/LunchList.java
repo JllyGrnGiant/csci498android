@@ -5,13 +5,13 @@ import java.util.List;
 
 import android.app.TabActivity;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -38,7 +38,25 @@ public class LunchList extends TabActivity {
 	private RadioGroup types                         = null;
 	private Restaurant current                       = null;
 	private EditText notes                           = null;
+	private int progress;
     
+	private Runnable longTask = new Runnable() {
+		
+		@Override
+		public void run() {
+			for (int i=0; i<20; ++i) {
+				doSomeLongWork(500);
+			}
+			
+			runOnUiThread(new Runnable() {
+				public void run() {
+					setProgressBarVisibility(false);
+				}
+			});
+		}
+		
+	};
+	
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		
 		@Override
@@ -151,6 +169,7 @@ public class LunchList extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.activity_lunch_list);
         
 		name    = (EditText) findViewById(R.id.name);
@@ -205,7 +224,26 @@ public class LunchList extends TabActivity {
     		
     		return true;
     	}
+    	else if (item.getItemId() == R.id.run) {
+    		setProgressBarVisibility(true);
+    		progress = 0;
+    		new Thread(longTask).start();
+    		
+    		return true;
+    	}
     	
     	return super.onOptionsItemSelected(item);
+    }
+    
+    private void doSomeLongWork(final int incr) {
+    	runOnUiThread(new Runnable() {
+    		public void run() {
+	        	progress += incr;
+	        	setProgress(progress);
+    		}
+    	});
+
+    	
+    	SystemClock.sleep(250);
     }
 }
