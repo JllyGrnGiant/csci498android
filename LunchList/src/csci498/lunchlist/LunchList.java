@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * The LunchList activity provides a form for users to enter and store
@@ -35,6 +37,7 @@ public class LunchList extends TabActivity {
 	private EditText address                         = null;
 	private RadioGroup types                         = null;
 	private Restaurant current                       = null;
+	private EditText notes                           = null;
     
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		
@@ -44,6 +47,7 @@ public class LunchList extends TabActivity {
 			
 			current.setName(name.getText().toString());
 			current.setAddress(address.getText().toString());
+			current.setNotes(notes.getText().toString());
 			
 			switch (types.getCheckedRadioButtonId()) {
 				case R.id.sit_down:
@@ -69,6 +73,7 @@ public class LunchList extends TabActivity {
 			
 			name.setText(current.getName());
 			address.setText(current.getAddress());
+			notes.setText(current.getNotes());
 			
 			if (current.getType().equals("sit_down")) {
 				types.check(R.id.sit_down);
@@ -151,6 +156,7 @@ public class LunchList extends TabActivity {
 		name    = (EditText) findViewById(R.id.name);
 		address = (EditText) findViewById(R.id.addr);
 		types   = (RadioGroup) findViewById(R.id.types);
+		notes   = (EditText) findViewById(R.id.notes);
         
         AutoCompleteTextView addressView = (AutoCompleteTextView) findViewById(R.id.addr);
         addressSuggestions = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
@@ -184,5 +190,22 @@ public class LunchList extends TabActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.option, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	if (item.getItemId() == R.id.toast) {
+    		String message = "No restaurant selected";
+    		
+    		if (current != null) {
+    			message = current.getNotes();
+    		}
+    		
+    		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    		
+    		return true;
+    	}
+    	
+    	return super.onOptionsItemSelected(item);
     }
 }
