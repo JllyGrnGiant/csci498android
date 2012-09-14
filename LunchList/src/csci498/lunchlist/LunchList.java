@@ -2,6 +2,7 @@ package csci498.lunchlist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.app.TabActivity;
 import android.os.Bundle;
@@ -39,13 +40,14 @@ public class LunchList extends TabActivity {
 	private Restaurant current                       = null;
 	private EditText notes                           = null;
 	private int progress;
+	private AtomicBoolean isActive                   = new AtomicBoolean(true);
     
 	private Runnable longTask = new Runnable() {
 		
 		@Override
 		public void run() {
-			for (int i=0; i<20; ++i) {
-				doSomeLongWork(500);
+			for (int i=progress; i<10000 && isActive.get(); i+=200) {
+				doSomeLongWork(200);
 			}
 			
 			runOnUiThread(new Runnable() {
@@ -245,5 +247,11 @@ public class LunchList extends TabActivity {
 
     	
     	SystemClock.sleep(250);
+    }
+    
+    @Override
+    public void onPause() {
+    	super.onPause();
+    	isActive.set(false);
     }
 }
