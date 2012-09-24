@@ -39,20 +39,21 @@
 			
 			            <TextView
 			                android:id="@+id/textView1"
-			                android:text="Name:"
+			                android:text="@string/name"
 			                android:textColor="#006600"
 			                android:textStyle="bold" />
 				
 				        <EditText
 				            android:id="@+id/name"
-				            android:textStyle="italic" />
+				            android:textStyle="italic"
+				            android:inputType="text" />
 				    </TableRow>
 				
 				    <TableRow>
 				
 				        <TextView
 				            android:id="@+id/textView2"
-				            android:text="Address:"
+				            android:text="@string/address"
 				            android:textColor="#006600"
 				            android:textStyle="bold" />
 				
@@ -71,7 +72,7 @@
 				            android:id="@+id/textView3"
 				            android:layout_width="wrap_content"
 				            android:layout_height="wrap_content"
-				            android:text="Type:"
+				            android:text="@string/type"
 				            android:textColor="#006600"
 				            android:textStyle="bold" />
 			
@@ -85,19 +86,19 @@
 				                android:layout_width="wrap_content"
 				                android:layout_height="wrap_content"
 				                android:checked="true"
-				                android:text="Sit-Down" />
+				                android:text="@string/sit_down" />
 			
 				            <RadioButton
 				                android:id="@+id/take_out"
 				                android:layout_width="wrap_content"
 				                android:layout_height="wrap_content"
-				                android:text="Take-Out" />
+				                android:text="@string/take_out" />
 			
 				            <RadioButton
 				                android:id="@+id/delivery"
 				                android:layout_width="wrap_content"
 				                android:layout_height="wrap_content"
-				                android:text="Delivery" />
+				                android:text="@string/delivery" />
 				            
 				        </RadioGroup>
 			
@@ -105,9 +106,10 @@
 				
 				    <TableRow>
 				        
-				        <TextView android:text="Notes:" />
+				        <TextView android:text="@string/notes" />
 				        
 				        <EditText android:id="@+id/notes"
+				            android:inputType="text"
 				            android:singleLine="false"
 				            android:gravity="top"
 				            android:lines="2"
@@ -122,7 +124,7 @@
 				        android:id="@+id/save"
 				        android:layout_width="match_parent"
 				        android:layout_height="wrap_content"
-				        android:text="Save" />
+				        android:text="@string/save" />
 				
 				</TableLayout>
 			

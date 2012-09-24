@@ -6,7 +6,8 @@
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ball_green" />
+        android:src="@drawable/ball_green"
+        android:contentDescription="@string/icon_desc" />
 
     <LinearLayout
         android:id="@+id/linearlayoutthingy"
@@ -20,7 +21,6 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="TextView"
             android:textStyle="bold" />
 
         <TextView
@@ -30,8 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:text="TextView" />
+            android:maxLines="1" />
     </LinearLayout>
 
 </LinearLayout>

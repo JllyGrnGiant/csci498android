@@ -12,5 +12,6 @@
     <string name="type">Type:</string>
     <string name="notes">Notes:</string>
     <string name="save">Save</string>
+    <string name="icon_desc">The icon used for the restaurant type</string>
 
 </resources>
