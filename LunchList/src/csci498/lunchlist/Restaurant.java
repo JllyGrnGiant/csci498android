@@ -1,7 +1,5 @@
 package csci498.lunchlist;
 
-import java.util.Date;
-
 /**
  * Restaurant models a restaurant by holding information about the
  * restaurant's name, address, and establishment type (e.g. sit-down)
@@ -10,14 +8,14 @@ public class Restaurant {
 
 	private String name;
 	private String address;
-	private String type;
 	private String notes;
+	private RestaurantType type;
 	
 	public Restaurant() {
 		name    = "";
 		address = "";
-		type    = "";
 		notes   = "";
+		type    = RestaurantType.SIT_DOWN;
 	}
 	
 	public String getNotes() {
@@ -44,11 +42,11 @@ public class Restaurant {
 		this.address = address;
 	}
 
-	public String getType() {
+	public RestaurantType getType() {
 		return type;
 	}
 	
-	public void setType(final String type) {
+	public void setType(final RestaurantType type) {
 		this.type = type;
 	}
 	
