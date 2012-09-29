@@ -1,19 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="4dip" >
+    android:padding="4dip">
     <ImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ball_green"
-        android:contentDescription="@string/icon_desc" />
+        android:contentDescription="@string/icon_desc"/>
 
     <LinearLayout
         android:id="@+id/linearlayoutthingy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/address"
@@ -30,7 +31,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="1" />
+            android:maxLines="1"/>
     </LinearLayout>
 
 </LinearLayout>

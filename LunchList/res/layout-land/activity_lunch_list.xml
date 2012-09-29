@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+
+<TabHost
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
     
-        <TabWidget android:id="@android:id/tabs"
+        <TabWidget
+            android:id="@android:id/tabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-        />
+            android:layout_height="wrap_content"/>
         
-        <FrameLayout android:id="@android:id/tabcontent"
+        <FrameLayout
+            android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             
             <ListView
        			android:id="@+id/restaurants"
         		android:layout_height="match_parent"
-        		android:layout_width="wrap_content"
-        	/>
+        		android:layout_width="wrap_content"/>
             
             <ScrollView 
                 android:layout_width="match_parent"
@@ -42,27 +44,25 @@
 			                android:text="@string/name"
 			                android:textColor="#006600"
 			                android:textStyle="bold"
-			                android:paddingRight="2dip"
-			            />
+			                android:paddingRight="2dip"/>
 				
 				        <EditText
 				            android:id="@+id/name"
 				            android:textStyle="italic"
 				            android:maxWidth="140sp"
-				            android:inputType="text"
-				        />
+				            android:inputType="text"/>
 				
 				        <TextView
 				            android:text="@string/address"
 				            android:textColor="#006600"
 				            android:textStyle="bold"
 				            android:paddingLeft="2dip"
-				            android:paddingRight="2dip" />
+				            android:paddingRight="2dip"/>
 				
 				        <AutoCompleteTextView
 				            android:id="@+id/addr"
 				            android:textStyle="italic"
-				            android:maxWidth="140sp" />
+				            android:maxWidth="140sp"/>
 				
 				    </TableRow>
 				    
@@ -71,48 +71,49 @@
 				        <TextView
 				            android:text="@string/type"
 				            android:textColor="#006600"
-				            android:textStyle="bold" />
+				            android:textStyle="bold"/>
 			
 				        <RadioGroup android:id="@+id/types">
 			
 				            <RadioButton
 				                android:id="@+id/sit_down"
 				                android:checked="true"
-				                android:text="@string/sit_down" />
+				                android:text="@string/sit_down"/>
 			
 				            <RadioButton
 				                android:id="@+id/take_out"
-				                android:text="@string/take_out" />
+				                android:text="@string/take_out"/>
 			
 				            <RadioButton
 				                android:id="@+id/delivery"
-				                android:text="@string/delivery" />
+				                android:text="@string/delivery"/>
 				            
 				        </RadioGroup>
 				            
-				        <TextView android:text="@string/notes"
-				            android:paddingLeft="2dip" />
+				        <TextView
+				            android:text="@string/notes"
+				            android:paddingLeft="2dip"/>
 				        
 				        <LinearLayout
 				            android:layout_width="match_parent"
 				            android:layout_height="match_parent"
-				            android:orientation="vertical" >
+				            android:orientation="vertical">
 					        
-					        <EditText android:id="@+id/notes"
+					        <EditText
+					            android:id="@+id/notes"
 					            android:layout_width="match_parent"
 					            android:layout_height="wrap_content"
 					            android:gravity="top"
 					            android:lines="3"
 					            android:maxLines="3"
 					            android:inputType="textMultiLine"
-					            android:scrollHorizontally="false"
-					        />
+					            android:scrollHorizontally="false"/>
 					        
 						    <Button
 						        android:id="@+id/save"
 						        android:layout_width="match_parent"
 						        android:layout_height="wrap_content"
-						        android:text="@string/save" />
+						        android:text="@string/save"/>
 						    
 						</LinearLayout>
 				        

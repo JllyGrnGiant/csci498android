@@ -221,14 +221,14 @@ public class LunchList extends TabActivity {
     }
 
 	private void setupTabs() {
-		TabHost.TabSpec spec = getTabHost().newTabSpec("tab1");
+		TabHost.TabSpec spec = getTabHost().newTabSpec(getString(R.string.list_tab));
         spec.setContent(R.id.restaurants);
-        spec.setIndicator("List", getResources().getDrawable(R.drawable.list));
+        spec.setIndicator(getString(R.string.list), getResources().getDrawable(R.drawable.list));
         getTabHost().addTab(spec);
         
-        spec = getTabHost().newTabSpec("tab2");
+        spec = getTabHost().newTabSpec(getString(R.string.details_tab));
         spec.setContent(R.id.details);
-        spec.setIndicator("Details", getResources().getDrawable(R.drawable.restaurant));
+        spec.setIndicator(getString(R.string.details), getResources().getDrawable(R.drawable.restaurant));
         getTabHost().addTab(spec);
         
         getTabHost().setCurrentTab(0);
@@ -243,7 +243,7 @@ public class LunchList extends TabActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	if (item.getItemId() == R.id.toast) {
-    		String message = "No restaurant selected";
+    		String message = getString(R.string.toast_default);
     		if (current != null) {
     			message = current.getNotes();
     		}
