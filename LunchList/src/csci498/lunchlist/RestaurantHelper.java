@@ -1,6 +1,5 @@
 package csci498.lunchlist;
 
-import csci498.lunchlist.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,8 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class RestaurantHelper extends SQLiteOpenHelper {
 	
-	private static final String DATABASE_NAME  = Resources.getSystem().getString(R.string.db_name);
+	private static final String DATABASE_NAME  = "lunchlist.db";
 	private static final int    SCHEMA_VERSION = 1;
+	private static final String CREATE_TABLE   = "CREATE TABLE restaurants " +
+		"(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, type TEXT, notes TEXT);";
 	
 	public RestaurantHelper(Context context) {
 		super(context, DATABASE_NAME, null, SCHEMA_VERSION);
@@ -21,7 +22,7 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL(Resources.getSystem().getString(R.string.db_create_table));
+		db.execSQL(CREATE_TABLE);
 	}
 	
 	@Override

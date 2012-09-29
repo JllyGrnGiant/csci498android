@@ -23,11 +23,6 @@
     <string name="details">Details</string>
     <string name="details_tab">Details Tab</string>
     
-    <!-- Database -->
-    <string name="db_name">lunchlist.db</string>
-    <string name="db_create_table">CREATE TABLE restaurants
-        (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, type TEXT, notes TEXT);</string>
-    
     <string name="toast_default">No restaurant selected</string>
     
     <!-- Restaurant icon description -->
