@@ -31,21 +31,22 @@ import android.widget.Toast;
 @SuppressWarnings("deprecation")
 public class LunchList extends TabActivity {
 
-	private List<Restaurant> model;
-	private RestaurantAdapter adapter;
+	private List<Restaurant>     model;
+	private RestaurantAdapter    adapter;
 	private ArrayAdapter<String> addressSuggestions;
-	private EditText name;
-	private EditText address;
-	private RadioGroup types;
-	private Restaurant current;
-	private EditText notes;
-	private int progress;
-	private AtomicBoolean isActive;
+	private EditText             name;
+	private EditText             address;
+	private EditText             notes;
+	private RadioGroup           types;
+	private Restaurant           current;
+	private int                  progress;
+	private AtomicBoolean        isActive;
 
 	private Runnable longTask = new Runnable() {
+		
 		@Override
 		public void run() {			
-			for (int i=progress; i<10000 && isActive.get(); i+=200) {
+			for (int i = progress; i < 10000 && isActive.get(); i += 200) {
 				doSomeLongWork(200);
 			}
 			
@@ -65,6 +66,7 @@ public class LunchList extends TabActivity {
 	};
 
 	private View.OnClickListener onSave = new View.OnClickListener() {
+		
 		@Override
 		public void onClick(View v) {
 			current = getRestaurantToSave();
@@ -95,6 +97,7 @@ public class LunchList extends TabActivity {
 	};
 	
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
+		
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			current = model.get(position);
 			updateRestaurantTab(current);
@@ -125,8 +128,8 @@ public class LunchList extends TabActivity {
 	 */
 	private static class RestaurantHolder {
 		
-		private TextView name;
-		private TextView address;
+		private TextView  name;
+		private TextView  address;
 		private ImageView icon;
 		
 		RestaurantHolder(View row) {
@@ -158,17 +161,18 @@ public class LunchList extends TabActivity {
 	 * in RestaurantHolder objects
 	 */
 	private class RestaurantAdapter extends ArrayAdapter<Restaurant> {
+		
 		public RestaurantAdapter() {
 			super(LunchList.this, android.R.layout.simple_list_item_1, model);
 		}
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View row = convertView;
+			View             row    = convertView;
 			RestaurantHolder holder = null;
 			
 			if (row == null) {
-				row = getLayoutInflater().inflate(R.layout.restaurant_layout, null);
+				row    = getLayoutInflater().inflate(R.layout.restaurant_layout, null);
 				holder = new RestaurantHolder(row);
 				row.setTag(holder);
 			}

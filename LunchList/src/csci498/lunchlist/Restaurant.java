@@ -6,9 +6,9 @@ package csci498.lunchlist;
  */
 public class Restaurant {
 
-	private String name;
-	private String address;
-	private String notes;
+	private String         name;
+	private String         address;
+	private String         notes;
 	private RestaurantType type;
 	
 	public Restaurant() {
