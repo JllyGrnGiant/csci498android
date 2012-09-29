@@ -33,6 +33,7 @@ public class LunchList extends TabActivity {
 	private EditText             notes;
 	private RadioGroup           types;
 	private Restaurant           current;
+	private RestaurantHelper     helper;
 
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		
@@ -164,9 +165,14 @@ public class LunchList extends TabActivity {
 		setupSaveButton();
         setupRestaurantList();
         setupTabs();
+        setupDatabase();
     }
     
-    private void setupViews() {
+    private void setupDatabase() {
+    	helper = new RestaurantHelper(this);
+	}
+
+	private void setupViews() {
     	name     = (EditText) findViewById(R.id.name);
 		address  = (EditText) findViewById(R.id.addr);
 		types    = (RadioGroup) findViewById(R.id.types);
@@ -203,4 +209,10 @@ public class LunchList extends TabActivity {
         
         getTabHost().setCurrentTab(0);
     }
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		helper.close();
+	}
 }
