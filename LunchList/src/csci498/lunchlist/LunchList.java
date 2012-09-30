@@ -1,9 +1,8 @@
 package csci498.lunchlist;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.TabActivity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,23 +25,23 @@ import android.widget.TextView;
 @SuppressWarnings("deprecation")
 public class LunchList extends TabActivity {
 
-	private List<Restaurant>     model;
+	private Cursor               model;
 	private RestaurantAdapter    adapter;
 	private ArrayAdapter<String> addressSuggestions;
 	private EditText             name;
 	private EditText             address;
 	private EditText             notes;
 	private RadioGroup           types;
-	private Restaurant           current;
 	private RestaurantHelper     helper;
 
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
-			current = getRestaurantToSave();
-			adapter.add(current);
-			addressSuggestions.add(current.getAddress());
+			Restaurant save = getRestaurantToSave();
+			helper.insert(save.getName(), save.getAddress(),
+				save.getType(), save.getNotes());
+			model.requery();
 		}
 		
 		private Restaurant getRestaurantToSave() {
@@ -69,17 +69,17 @@ public class LunchList extends TabActivity {
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
 		
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			current = model.get(position);
-			updateRestaurantTab(current);
+			model.moveToPosition(position);
+			updateRestaurantTab(model, helper);
 			getTabHost().setCurrentTab(1);
 		}
 		
-		private void updateRestaurantTab(final Restaurant current) {
-			name.setText(current.getName());
-			address.setText(current.getAddress());
-			notes.setText(current.getNotes());
+		private void updateRestaurantTab(final Cursor c, final RestaurantHelper helper) {
+			name.setText(helper.getName(c));
+			address.setText(helper.getAddress(c));
+			notes.setText(helper.getNotes(c));
 
-			switch (current.getType()) {
+			switch (helper.getType(c)) {
 				case SIT_DOWN:
 					types.check(R.id.sit_down);
 					break;
@@ -107,12 +107,12 @@ public class LunchList extends TabActivity {
 			address = (TextView) row.findViewById(R.id.address);
 			icon    = (ImageView) row.findViewById(R.id.icon);
 		}
-		
-		void populateFrom(Restaurant r) {
-			name.setText(r.getName());
-			address.setText(r.getAddress());
 
-			switch (r.getType()) {
+		public void populateFrom(Cursor c, RestaurantHelper helper) {
+			name.setText(helper.getName(c));
+			address.setText(helper.getAddress(c));
+			
+			switch (helper.getType(c)) {
 				case SIT_DOWN:
 					icon.setImageResource(R.drawable.ball_green);
 					break;
@@ -130,27 +130,23 @@ public class LunchList extends TabActivity {
 	 * A custom adapter for displaying restaurant information stored
 	 * in RestaurantHolder objects
 	 */
-	private class RestaurantAdapter extends ArrayAdapter<Restaurant> {
+	private class RestaurantAdapter extends CursorAdapter {
 		
-		public RestaurantAdapter() {
-			super(LunchList.this, android.R.layout.simple_list_item_1, model);
+		public RestaurantAdapter(Cursor c) {
+			super(LunchList.this, c);
 		}
 		
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View             row    = convertView;
-			RestaurantHolder holder = null;
-			
-			if (row == null) {
-				row    = getLayoutInflater().inflate(R.layout.restaurant_layout, null);
-				holder = new RestaurantHolder(row);
-				row.setTag(holder);
-			}
-			else {
-				holder = (RestaurantHolder) row.getTag();
-			}
-			
-			holder.populateFrom(model.get(position));
+		public void bindView(View row, Context context, Cursor c) {
+			RestaurantHolder holder = (RestaurantHolder) row.getTag();
+			holder.populateFrom(c, helper);
+		}
+		
+		@Override
+		public View newView(Context context, Cursor c, ViewGroup parent) {
+			View row = getLayoutInflater().inflate(R.layout.restaurant_layout, parent, false);
+			RestaurantHolder holder = new RestaurantHolder(row);
+			row.setTag(holder);
 			
 			return row;
 		}
@@ -161,11 +157,11 @@ public class LunchList extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lunch_list);
         
+        setupDatabase();
 		setupViews();
 		setupSaveButton();
         setupRestaurantList();
         setupTabs();
-        setupDatabase();
     }
     
     private void setupDatabase() {
@@ -173,14 +169,14 @@ public class LunchList extends TabActivity {
 	}
 
 	private void setupViews() {
-    	name     = (EditText) findViewById(R.id.name);
-		address  = (EditText) findViewById(R.id.addr);
-		types    = (RadioGroup) findViewById(R.id.types);
-		notes    = (EditText) findViewById(R.id.notes);
-		model    = new ArrayList<Restaurant>();
+    	name    = (EditText) findViewById(R.id.name);
+		address = (EditText) findViewById(R.id.addr);
+		types   = (RadioGroup) findViewById(R.id.types);
+		notes   = (EditText) findViewById(R.id.notes);
         
         AutoCompleteTextView addressView = (AutoCompleteTextView) findViewById(R.id.addr);
-        addressSuggestions = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line);
+        addressSuggestions = new ArrayAdapter<String>(this,
+        	android.R.layout.simple_dropdown_item_1line);
         addressView.setAdapter(addressSuggestions);
     }
     
@@ -190,7 +186,11 @@ public class LunchList extends TabActivity {
     }
     
     private void setupRestaurantList() {
-    	adapter = new RestaurantAdapter();
+    	model = helper.getAll();
+    	startManagingCursor(model);
+    	
+    	adapter = new RestaurantAdapter(model);
+
     	ListView list = (ListView) findViewById(R.id.restaurants);
         list.setAdapter(adapter);
         list.setOnItemClickListener(onListClick);
@@ -199,12 +199,14 @@ public class LunchList extends TabActivity {
 	private void setupTabs() {
 		TabHost.TabSpec spec = getTabHost().newTabSpec(getString(R.string.list_tab));
         spec.setContent(R.id.restaurants);
-        spec.setIndicator(getString(R.string.list), getResources().getDrawable(R.drawable.list));
+        spec.setIndicator(getString(R.string.list),
+        	getResources().getDrawable(R.drawable.list));
         getTabHost().addTab(spec);
         
         spec = getTabHost().newTabSpec(getString(R.string.details_tab));
         spec.setContent(R.id.details);
-        spec.setIndicator(getString(R.string.details), getResources().getDrawable(R.drawable.restaurant));
+        spec.setIndicator(getString(R.string.details),
+        	getResources().getDrawable(R.drawable.restaurant));
         getTabHost().addTab(spec);
         
         getTabHost().setCurrentTab(0);

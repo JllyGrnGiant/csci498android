@@ -92,6 +92,8 @@
 				            
 				        <TextView
 				            android:text="@string/notes"
+				            android:textColor="#006600"
+				            android:textStyle="bold"
 				            android:paddingLeft="2dip"/>
 				        
 				        <LinearLayout
