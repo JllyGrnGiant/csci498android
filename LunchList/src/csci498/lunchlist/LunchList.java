@@ -3,8 +3,10 @@ package csci498.lunchlist;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,19 @@ public class LunchList extends ListActivity {
 	public final static String ID_EXTRA = "apt.tutorial._ID";
 	
 	private RestaurantHelper  helper;
+	private SharedPreferences prefs;
+	private Cursor            model;
+	
+	private SharedPreferences.OnSharedPreferenceChangeListener prefListener =
+		new SharedPreferences.OnSharedPreferenceChangeListener() {
+			
+		@Override
+		public void onSharedPreferenceChanged(SharedPreferences sharedPrefs, String key) {
+			if (key.equals(getString(R.string.pref_key))) {
+				setupRestaurantList();
+			}
+		}
+	};
 	
 	/**
 	 * A container for restaurant name, address, and icon resources
@@ -93,9 +108,20 @@ public class LunchList extends ListActivity {
 	}
     
     private void setupRestaurantList() {
-    	Cursor model = helper.getAll();
+    	if (model != null) {
+    		stopManagingCursor(model);
+    		model.close();
+    	}
+    	
+    	model = helper.getAll(prefs.getString(
+    		getString(R.string.pref_key), getString(R.string.pref_default)));
     	startManagingCursor(model);
     	setListAdapter(new RestaurantAdapter(model));
+    }
+    
+    private void setupPreferences() {
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(prefListener);
     }
     
     @Override
@@ -103,6 +129,7 @@ public class LunchList extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lunch_list);
         
+        setupPreferences();
         setupDatabaseHelper();
         setupRestaurantList();
     }
@@ -124,6 +151,10 @@ public class LunchList extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
     	if (item.getItemId() == R.id.add) {
     		startActivity(new Intent(LunchList.this, DetailForm.class));
+    		return true;
+    	}
+    	else if (item.getItemId() == R.id.prefs) {
+    		startActivity(new Intent(this, EditPreferences.class));
     		return true;
     	}
     	

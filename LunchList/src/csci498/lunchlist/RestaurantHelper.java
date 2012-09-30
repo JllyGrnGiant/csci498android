@@ -17,10 +17,13 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	
 	private static final String CREATE_TABLE = "CREATE TABLE restaurants " +
 		"(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, type TEXT, notes TEXT);";
+	
+	// Incomplete SQL - Must append string for ORDER BY argument in getAll()
 	private static final String SELECT_ALL   = "SELECT _id, name, address, type, notes " +
-		"FROM restaurants ORDER BY name";
+		"FROM restaurants ORDER BY ";
+	
 	private static final String SELECT_BY_ID = "SELECT _id, name, address, type, notes " +
-			"FROM restaurants WHERE _ID = ?";
+		 "FROM restaurants WHERE _ID = ?";
 	
 	public RestaurantHelper(Context context) {
 		super(context, DATABASE_NAME, null, SCHEMA_VERSION);
@@ -61,12 +64,12 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	
 	public Cursor getById(String id) {
     	String[] args = { id };
-    	
     	return getReadableDatabase().rawQuery(SELECT_BY_ID, args);
     }
 	
-	public Cursor getAll() {
-		return getReadableDatabase().rawQuery(SELECT_ALL, null);
+	public Cursor getAll(String orderBy) {
+		// Append orderBy to SELECT_ALL to complete the query
+		return getReadableDatabase().rawQuery(SELECT_ALL + orderBy, null);
 	}
 	
 	public String getName(Cursor c) {
