@@ -25,7 +25,8 @@
     
     <string name="toast_default">No restaurant selected</string>
     
-    <!-- Restaurant icon description -->
+    <!-- Descriptions -->
     <string name="icon_desc">The icon used for the restaurant type</string>
-
+	<string name="add_restaurant_instructions">Click the MENU button to add a restaurant!</string>
+    
 </resources>

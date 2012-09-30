@@ -1,139 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TabHost
+    
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/tabhost"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <ListView
+        android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
     
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            
-            <ListView
-                android:id="@+id/restaurants"
-        		android:layout_height="match_parent"
-        		android:layout_width="match_parent">
-    		</ListView>
-            
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                
-			    <TableLayout
-			        android:id="@+id/details"
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
-			        android:shrinkColumns="1"
-			        android:stretchColumns="1">
-			
-			        <TableRow>
-			
-			            <TextView
-			                android:text="@string/name"
-			                android:textColor="#006600"
-			                android:textStyle="bold"/>
-				
-				        <EditText
-				            android:id="@+id/name"
-				            android:textStyle="italic"
-				            android:inputType="text"/>
-				    </TableRow>
-				
-				    <TableRow>
-				
-				        <TextView
-				            android:text="@string/address"
-				            android:textColor="#006600"
-				            android:textStyle="bold"/>
-				
-				        <AutoCompleteTextView
-				            android:id="@+id/addr"
-				            android:textStyle="italic"/>
-				
-				    </TableRow>
-				    
-				    <TableRow
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content">
-			
-				        <TextView
-				            android:layout_width="wrap_content"
-				            android:layout_height="wrap_content"
-				            android:text="@string/type"
-				            android:textColor="#006600"
-				            android:textStyle="bold"/>
-			
-				        <RadioGroup
-				            android:id="@+id/types"
-				            android:layout_width="wrap_content"
-				            android:layout_height="wrap_content">
-			
-				            <RadioButton
-				                android:id="@+id/sit_down"
-				                android:layout_width="wrap_content"
-				                android:layout_height="wrap_content"
-				                android:checked="true"
-				                android:text="@string/sit_down"/>
-			
-				            <RadioButton
-				                android:id="@+id/take_out"
-				                android:layout_width="wrap_content"
-				                android:layout_height="wrap_content"
-				                android:text="@string/take_out"/>
-			
-				            <RadioButton
-				                android:id="@+id/delivery"
-				                android:layout_width="wrap_content"
-				                android:layout_height="wrap_content"
-				                android:text="@string/delivery"/>
-				            
-				        </RadioGroup>
-			
-				    </TableRow>
-				
-				    <TableRow>
-				        
-				        <TextView
-				            android:text="@string/notes"
-				            android:textColor="#006600"
-				            android:textStyle="bold"/>
-				        
-				        <EditText
-				            android:id="@+id/notes"
-				            android:inputType="text"
-				            android:singleLine="false"
-				            android:gravity="top"
-				            android:lines="2"
-				            android:scrollHorizontally="false"
-				            android:maxLines="2"
-				            android:maxWidth="200sp"/>
-				        
-				    </TableRow>
-				    
-				    <Button
-				        android:id="@+id/save"
-				        android:layout_width="match_parent"
-				        android:layout_height="wrap_content"
-				        android:text="@string/save"/>
-				
-				</TableLayout>
-			
-		    </ScrollView>
-    
-    	</FrameLayout>
-    
-    </LinearLayout>
+    <TextView 
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/add_restaurant_instructions"/>
 
-</TabHost>
+</FrameLayout>
