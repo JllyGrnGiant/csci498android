@@ -101,14 +101,14 @@ public class DetailForm extends Activity {
 		address.setText(helper.getAddress(c));
 		notes.setText(helper.getNotes(c));
 		
-		switch (types.getCheckedRadioButtonId()) {
-			case R.id.sit_down:
+		switch (helper.getType(c)) {
+			case SIT_DOWN:
 				types.check(R.id.sit_down);
 				break;
-			case R.id.take_out:
+			case TAKE_OUT:
 				types.check(R.id.take_out);
 				break;
-		    case R.id.delivery:
+		    case DELIVERY:
 		    	types.check(R.id.delivery);
 				break;
 		}
