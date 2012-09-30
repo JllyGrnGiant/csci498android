@@ -33,6 +33,8 @@
             
         </activity>
         
+        <activity android:name=".DetailForm"></activity>
+        
     </application>
 
 </manifest>

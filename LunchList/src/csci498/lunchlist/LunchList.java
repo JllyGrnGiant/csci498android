@@ -2,6 +2,7 @@ package csci498.lunchlist;
 
 import android.app.TabActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -69,27 +70,8 @@ public class LunchList extends TabActivity {
 	private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
 		
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			model.moveToPosition(position);
-			updateRestaurantTab(model, helper);
-			getTabHost().setCurrentTab(1);
-		}
-		
-		private void updateRestaurantTab(final Cursor c, final RestaurantHelper helper) {
-			name.setText(helper.getName(c));
-			address.setText(helper.getAddress(c));
-			notes.setText(helper.getNotes(c));
-
-			switch (helper.getType(c)) {
-				case SIT_DOWN:
-					types.check(R.id.sit_down);
-					break;
-				case TAKE_OUT:
-					types.check(R.id.take_out);
-					break;
-				default:
-					types.check(R.id.delivery);
-					break;
-			}
+			Intent i = new Intent(LunchList.this, DetailForm.class);
+			startActivity(i);
 		}
     };
 	
@@ -157,20 +139,19 @@ public class LunchList extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lunch_list);
         
-        setupDatabase();
+        setupDatabaseHelper();
 		setupViews();
 		setupSaveButton();
         setupRestaurantList();
         setupTabs();
     }
     
-    private void setupDatabase() {
+    private void setupDatabaseHelper() {
     	helper = new RestaurantHelper(this);
 	}
 
 	private void setupViews() {
     	name    = (EditText) findViewById(R.id.name);
-		address = (EditText) findViewById(R.id.addr);
 		types   = (RadioGroup) findViewById(R.id.types);
 		notes   = (EditText) findViewById(R.id.notes);
         
