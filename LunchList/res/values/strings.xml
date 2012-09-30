@@ -17,16 +17,11 @@
     <string name="notes">Notes:</string>
     <string name="save">Save</string>
     
-    <!-- Tabs -->
-    <string name="list">List</string>
-    <string name="list_tab">List Tab</string>
-    <string name="details">Details</string>
-    <string name="details_tab">Details Tab</string>
-    
-    <string name="toast_default">No restaurant selected</string>
-    
     <!-- Descriptions -->
     <string name="icon_desc">The icon used for the restaurant type</string>
 	<string name="add_restaurant_instructions">Click the MENU button to add a restaurant!</string>
     
+	<!-- Menu -->
+	<string name="add">Add</string>
+	
 </resources>

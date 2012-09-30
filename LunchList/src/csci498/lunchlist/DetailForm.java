@@ -1,10 +1,9 @@
 package csci498.lunchlist;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -16,12 +15,24 @@ public class DetailForm extends Activity {
 	private EditText         notes;
 	private RadioGroup       types;
 	private RestaurantHelper helper;
+	private String           restaurantId;
 	
 	private View.OnClickListener onSave = new View.OnClickListener() {
 		
 		@Override
 		public void onClick(View v) {
 			Restaurant save = getRestaurantToSave();
+			
+			if (restaurantId == null) {
+				helper.insert(save.getName(), save.getAddress(),
+					save.getType(), save.getNotes());
+			}
+			else {
+				helper.update(restaurantId, save.getName(),
+						save.getAddress(), save.getType(), save.getNotes());
+			}
+			
+			finish();
 		}
 		
 		private Restaurant getRestaurantToSave() {
@@ -54,8 +65,41 @@ public class DetailForm extends Activity {
 		setupDatabaseHelper();
     	setupViews();
     	setupSaveButton();
+    	setRestaurantId();
+    	loadDatabaseData();
 	}
     
+	private void loadDatabaseData() {
+		if (restaurantId == null) {
+			return;
+		}
+		
+		Cursor c = helper.getById(restaurantId);
+		
+		c.moveToFirst();
+		name.setText(helper.getName(c));
+		address.setText(helper.getAddress(c));
+		notes.setText(helper.getNotes(c));
+		
+		switch (types.getCheckedRadioButtonId()) {
+			case R.id.sit_down:
+				types.check(R.id.sit_down);
+				break;
+			case R.id.take_out:
+				types.check(R.id.take_out);
+				break;
+		    case R.id.delivery:
+		    	types.check(R.id.delivery);
+				break;
+		}
+		
+		c.close();
+	}
+
+	private void setRestaurantId() {
+		restaurantId = getIntent().getStringExtra(LunchList.ID_EXTRA);
+	}
+
 	private void setupDatabaseHelper() {
     	helper = new RestaurantHelper(this);
 	}
@@ -70,5 +114,11 @@ public class DetailForm extends Activity {
     private void setupSaveButton() {
     	Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(onSave);
+    }
+    
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+    	helper.close();
     }
 }
