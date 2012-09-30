@@ -8,6 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+/**
+ * DetailForm is started by LunchList to edit and/or
+ * add restaurants to the database for display in the
+ * LunchList activity
+ */
 public class DetailForm extends Activity {
 	
 	private EditText         name;

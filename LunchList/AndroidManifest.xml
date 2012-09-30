@@ -38,6 +38,11 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         
+        <activity
+            android:name=".EditPreferences"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        
     </application>
 
 </manifest>
