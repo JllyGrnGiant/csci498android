@@ -3,14 +3,14 @@
     <!-- Application -->
     <string name="app_name">LunchList</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_lunch_list">LunchList</string>
+    <string name="title_activity_lunch_list">Lunch List</string>
     
     <!-- Restaurant types -->
     <string name="sit_down">Sit-Down</string>
     <string name="take_out">Take-Out</string>
     <string name="delivery">Delivery</string>
     
-    <!-- Labels -->
+    <!-- Form Labels -->
     <string name="name">Name:</string>
     <string name="address">Address:</string>
     <string name="type">Type:</string>

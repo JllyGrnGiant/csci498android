@@ -18,19 +18,12 @@ import android.widget.TextView;
  * The LunchList activity provides a form for users to enter and store
  * restaurant information and displays that information in a list
  */
+@SuppressWarnings("deprecation")
 public class LunchList extends ListActivity {
 
 	public final static String ID_EXTRA = "apt.tutorial._ID";
 	
-	private Cursor               model;
-	private RestaurantAdapter    adapter;
-	private RestaurantHelper     helper;
-	
-	public void onListItemClick(ListView list, View view, int position, long id) {
-		Intent i = new Intent(LunchList.this, DetailForm.class);
-		i.putExtra(ID_EXTRA, String.valueOf(id));
-		startActivity(i);
-    };
+	private RestaurantHelper  helper;
 	
 	/**
 	 * A container for restaurant name, address, and icon resources
@@ -47,6 +40,10 @@ public class LunchList extends ListActivity {
 			icon    = (ImageView) row.findViewById(R.id.icon);
 		}
 
+		/**
+		 * Updates the RestaurantHolder's fields with data pointed
+		 * to by the Cursor obtained from the RestaurantHelper
+		 */
 		public void populateFrom(Cursor c, RestaurantHelper helper) {
 			name.setText(helper.getName(c));
 			address.setText(helper.getAddress(c));
@@ -90,7 +87,17 @@ public class LunchList extends ListActivity {
 			return row;
 		}
 	}
-
+    
+    private void setupDatabaseHelper() {
+    	helper = new RestaurantHelper(this);
+	}
+    
+    private void setupRestaurantList() {
+    	Cursor model = helper.getAll();
+    	startManagingCursor(model);
+    	setListAdapter(new RestaurantAdapter(model));
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,16 +107,12 @@ public class LunchList extends ListActivity {
         setupRestaurantList();
     }
     
-    private void setupDatabaseHelper() {
-    	helper = new RestaurantHelper(this);
-	}
-    
-    private void setupRestaurantList() {
-    	model = helper.getAll();
-    	startManagingCursor(model);
-    	adapter = new RestaurantAdapter(model);
-    	setListAdapter(adapter);
-    }
+    @Override
+	public void onListItemClick(ListView list, View view, int position, long id) {
+		Intent i = new Intent(LunchList.this, DetailForm.class);
+		i.putExtra(ID_EXTRA, String.valueOf(id));
+		startActivity(i);
+    };
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -15,12 +15,10 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME  = "lunchlist.db";
 	private static final int    SCHEMA_VERSION = 1;
 	
-	private static final String CREATE_TABLE   = "CREATE TABLE restaurants " +
+	private static final String CREATE_TABLE = "CREATE TABLE restaurants " +
 		"(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, type TEXT, notes TEXT);";
-	
-	private static final String SELECT_ALL = "SELECT _id, name, address, type, notes " +
+	private static final String SELECT_ALL   = "SELECT _id, name, address, type, notes " +
 		"FROM restaurants ORDER BY name";
-	
 	private static final String SELECT_BY_ID = "SELECT _id, name, address, type, notes " +
 			"FROM restaurants WHERE _ID = ?";
 	

@@ -68,33 +68,6 @@ public class DetailForm extends Activity {
     	setRestaurantId();
     	loadDatabaseData();
 	}
-    
-	private void loadDatabaseData() {
-		if (restaurantId == null) {
-			return;
-		}
-		
-		Cursor c = helper.getById(restaurantId);
-		
-		c.moveToFirst();
-		name.setText(helper.getName(c));
-		address.setText(helper.getAddress(c));
-		notes.setText(helper.getNotes(c));
-		
-		switch (types.getCheckedRadioButtonId()) {
-			case R.id.sit_down:
-				types.check(R.id.sit_down);
-				break;
-			case R.id.take_out:
-				types.check(R.id.take_out);
-				break;
-		    case R.id.delivery:
-		    	types.check(R.id.delivery);
-				break;
-		}
-		
-		c.close();
-	}
 
 	private void setRestaurantId() {
 		restaurantId = getIntent().getStringExtra(LunchList.ID_EXTRA);
@@ -115,6 +88,33 @@ public class DetailForm extends Activity {
     	Button save = (Button) findViewById(R.id.save);
         save.setOnClickListener(onSave);
     }
+
+	private void loadDatabaseData() {
+		if (restaurantId == null) {
+			return;
+		}
+		
+		Cursor c = helper.getById(restaurantId);
+		c.moveToFirst();
+		
+		name.setText(helper.getName(c));
+		address.setText(helper.getAddress(c));
+		notes.setText(helper.getNotes(c));
+		
+		switch (types.getCheckedRadioButtonId()) {
+			case R.id.sit_down:
+				types.check(R.id.sit_down);
+				break;
+			case R.id.take_out:
+				types.check(R.id.take_out);
+				break;
+		    case R.id.delivery:
+		    	types.check(R.id.delivery);
+				break;
+		}
+		
+		c.close();
+	}
     
     @Override
     public void onDestroy() {

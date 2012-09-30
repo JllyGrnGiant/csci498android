@@ -33,7 +33,10 @@
             
         </activity>
         
-        <activity android:name=".DetailForm"></activity>
+        <activity
+            android:name=".DetailForm"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
         
     </application>
 
