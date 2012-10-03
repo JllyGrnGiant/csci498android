@@ -3,6 +3,6 @@
 	<item
 	    android:id="@+id/feed"
 	    android:title="RSS Feed"
-	    android:icon="@drawable/ic_menu_friendlist"/>
+	    android:icon="@drawable/ic_menu_friendslist"/>
 
 </menu>
