@@ -88,6 +88,8 @@
 	        
 	        <EditText
 	            android:id="@+id/feed"
+	            android:lines="2"
+	            android:gravity="top"
 	            android:hint="@+string/feed"/>
 	        
 	    </TableRow>
