@@ -77,18 +77,18 @@
 	
 	    <TableRow>
 	        
-	        <TextView
-	            android:text="@string/notes"
-	            android:textColor="#006600"
-	            android:textStyle="bold"/>
-	        
 	        <EditText
 	            android:id="@+id/notes"
 	            android:inputType="textMultiLine"
 	            android:gravity="top"
 	            android:lines="2"
 	            android:scrollHorizontally="false"
-	            android:maxLines="2"/>
+	            android:maxLines="2"
+	            android:hint="@string/notes"/>
+	        
+	        <EditText
+	            android:id="@+id/feed"
+	            android:hint="@+string/feed"/>
 	        
 	    </TableRow>
 	    

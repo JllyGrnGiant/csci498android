@@ -23,10 +23,10 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 		"COLUMN feed TEXT";
 	
 	// Incomplete SQL - Must append string for ORDER BY argument in getAll()
-	private static final String SELECT_ALL = "SELECT _id, name, address, type, notes " +
+	private static final String SELECT_ALL = "SELECT _id, name, address, type, notes, feed " +
 		"FROM restaurants ORDER BY ";
 	
-	private static final String SELECT_BY_ID = "SELECT _id, name, address, type, notes " +
+	private static final String SELECT_BY_ID = "SELECT _id, name, address, type, notes, feed " +
 		 "FROM restaurants WHERE _ID = ?";
 	
 	public RestaurantHelper(Context context) {
@@ -43,18 +43,19 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 		db.execSQL(ALTER_TABLE);
 	}
 	
-	public void insert(String name, String address, RestaurantType type, String notes) {
+	public void insert(String name, String address, RestaurantType type, String notes, String feed) {
 		ContentValues cv = new ContentValues();
 		
 		cv.put("name", name);
 		cv.put("address", address);
 		cv.put("type", type.name());
 		cv.put("notes", notes);
+		cv.put("feed", feed);
 		
 		getWritableDatabase().insert("restaurants", "name", cv);
 	}
 	
-	public void update(String id, String name, String address, RestaurantType type, String notes) {
+	public void update(String id, String name, String address, RestaurantType type, String notes, String feed) {
 		ContentValues cv = new ContentValues();
 		String[] args = { id };
 		
@@ -62,6 +63,7 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 		cv.put("address", address);
 		cv.put("type", type.name());
 		cv.put("notes", notes);
+		cv.put("feed", feed);
 		
 		getWritableDatabase().update("restaurants", cv, "_ID = ?", args);
 	}
@@ -90,5 +92,9 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	
 	public String getNotes(Cursor c) {
 		return c.getString(4);
+	}
+	
+	public String getFeed(Cursor c) {
+		return c.getString(5);
 	}
 }

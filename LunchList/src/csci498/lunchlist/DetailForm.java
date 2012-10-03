@@ -3,6 +3,8 @@ package csci498.lunchlist;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ public class DetailForm extends Activity {
 	private EditText         name;
 	private EditText         address;
 	private EditText         notes;
+	private EditText         feed;
 	private RadioGroup       types;
 	private RestaurantHelper helper;
 	private String           restaurantId;
@@ -30,11 +33,13 @@ public class DetailForm extends Activity {
 			
 			if (restaurantId == null) {
 				helper.insert(save.getName(), save.getAddress(),
-					save.getType(), save.getNotes());
+					save.getType(), save.getNotes(),
+					feed.getText().toString());
 			}
 			else {
 				helper.update(restaurantId, save.getName(),
-						save.getAddress(), save.getType(), save.getNotes());
+					save.getAddress(), save.getType(),
+					save.getNotes(), feed.getText().toString());
 			}
 			
 			finish();
@@ -87,6 +92,7 @@ public class DetailForm extends Activity {
 		address = (EditText) findViewById(R.id.addr);
 		types   = (RadioGroup) findViewById(R.id.types);
 		notes   = (EditText) findViewById(R.id.notes);
+		feed    = (EditText) findViewById(R.id.feed);
     }
     
     private void setupSaveButton() {
@@ -105,6 +111,7 @@ public class DetailForm extends Activity {
 		name.setText(helper.getName(c));
 		address.setText(helper.getAddress(c));
 		notes.setText(helper.getNotes(c));
+		feed.setText(helper.getFeed(c));
 		
 		switch (helper.getType(c)) {
 			case SIT_DOWN:
@@ -141,6 +148,12 @@ public class DetailForm extends Activity {
 		types.check(state.getInt("type"));
 	}
     
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		new MenuInflater(this).inflate(R.menu.details_option, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
     @Override
     public void onDestroy() {
     	super.onDestroy();

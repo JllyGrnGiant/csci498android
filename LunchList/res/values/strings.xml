@@ -14,7 +14,8 @@
     <string name="name">Name:</string>
     <string name="address">Address:</string>
     <string name="type">Type:</string>
-    <string name="notes">Notes:</string>
+    <string name="notes">Notes</string>
+    <string name="feed">Feed</string>
     <string name="save">Save</string>
     
     <!-- Descriptions -->
