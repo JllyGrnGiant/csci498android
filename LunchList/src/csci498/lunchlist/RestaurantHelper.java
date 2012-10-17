@@ -13,20 +13,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class RestaurantHelper extends SQLiteOpenHelper {
 	
 	private static final String DATABASE_NAME  = "lunchlist.db";
-	private static final int    SCHEMA_VERSION = 2;
+	private static final int    SCHEMA_VERSION = 3;
 	
 	private static final String CREATE_TABLE = "CREATE TABLE restaurants " +
 		"(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, address TEXT, " +
-		"type TEXT, notes TEXT, feed TEXT);";
-	
-	private static final String ALTER_TABLE = "ALTER TABLE restaurants ADD " +
-		"COLUMN feed TEXT";
+		"type TEXT, notes TEXT, feed TEXT, lat REAL, lon REAL);";
 	
 	// Incomplete SQL - Must append string for ORDER BY argument in getAll()
-	private static final String SELECT_ALL = "SELECT _id, name, address, type, notes, feed " +
+	private static final String SELECT_ALL = "SELECT _id, name, address, type, notes, feed, lat, lon " +
 		"FROM restaurants ORDER BY ";
 	
-	private static final String SELECT_BY_ID = "SELECT _id, name, address, type, notes, feed " +
+	private static final String SELECT_BY_ID = "SELECT _id, name, address, type, notes, feed, lat, lon " +
 		 "FROM restaurants WHERE _ID = ?";
 	
 	public RestaurantHelper(Context context) {
@@ -40,7 +37,14 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL(ALTER_TABLE);
+		if (oldVersion < 2) {
+			db.execSQL("ALTER TABLE restaurants ADD COLUMN feed TEXT");
+		}
+		
+		if (oldVersion < 3) {
+			db.execSQL("ALTER TABLE restaurants ADD COLUMN lat REAL");
+			db.execSQL("ALTER TABLE restaurants ADD COLUMN lon REAL");
+		}
 	}
 	
 	public void insert(String name, String address, RestaurantType type, String notes, String feed) {
@@ -96,5 +100,13 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 	
 	public String getFeed(Cursor c) {
 		return c.getString(5);
+	}
+	
+	public double getLatitude(Cursor c) {
+		return c.getDouble(6);
+	}
+	
+	public double getLongitude(Cursor c) {
+		return c.getDouble(7);
 	}
 }
