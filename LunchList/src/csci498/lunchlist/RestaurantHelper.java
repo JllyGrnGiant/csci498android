@@ -72,6 +72,16 @@ public class RestaurantHelper extends SQLiteOpenHelper {
 		getWritableDatabase().update("restaurants", cv, "_ID = ?", args);
 	}
 	
+	public void updateLocation(String id, double lat, double lon) {
+		ContentValues cv = new ContentValues();
+		String[] args = { id };
+		
+		cv.put("lat", lat);
+		cv.put("lon", lon);
+		
+		getWritableDatabase().update("restaurants", cv, "_ID=?", args);
+	}
+	
 	public Cursor getById(String id) {
     	String[] args = { id };
     	return getReadableDatabase().rawQuery(SELECT_BY_ID, args);
