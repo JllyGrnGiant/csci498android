@@ -9,10 +9,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -26,14 +25,13 @@ public class DetailForm extends Activity {
 	private EditText         address;
 	private EditText         notes;
 	private EditText         feed;
+	private TextView         location;
 	private RadioGroup       types;
 	private RestaurantHelper helper;
 	private String           restaurantId;
 	
-	private View.OnClickListener onSave = new View.OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
+	private void save() {
+		if (name.getText().toString().length() > 0) {
 			Restaurant save = getRestaurantToSave();
 			
 			if (restaurantId == null) {
@@ -46,31 +44,29 @@ public class DetailForm extends Activity {
 					save.getAddress(), save.getType(),
 					save.getNotes(), feed.getText().toString());
 			}
-			
-			finish();
+		}
+	}
+	
+	private Restaurant getRestaurantToSave() {
+		Restaurant save = new Restaurant();
+		save.setName(name.getText().toString());
+		save.setAddress(address.getText().toString());
+		save.setNotes(notes.getText().toString());
+		
+		switch (types.getCheckedRadioButtonId()) {
+			case R.id.sit_down:
+				save.setType(RestaurantType.SIT_DOWN);
+				break;
+			case R.id.take_out:
+				save.setType(RestaurantType.TAKE_OUT);
+				break;
+		    case R.id.delivery:
+		    	save.setType(RestaurantType.DELIVERY);
+				break;
 		}
 		
-		private Restaurant getRestaurantToSave() {
-			Restaurant save = new Restaurant();
-			save.setName(name.getText().toString());
-			save.setAddress(address.getText().toString());
-			save.setNotes(notes.getText().toString());
-			
-			switch (types.getCheckedRadioButtonId()) {
-				case R.id.sit_down:
-					save.setType(RestaurantType.SIT_DOWN);
-					break;
-				case R.id.take_out:
-					save.setType(RestaurantType.TAKE_OUT);
-					break;
-			    case R.id.delivery:
-			    	save.setType(RestaurantType.DELIVERY);
-					break;
-			}
-			
-			return save;
-		}
-	};
+		return save;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +75,6 @@ public class DetailForm extends Activity {
 		
 		setupDatabaseHelper();
     	setupViews();
-    	setupSaveButton();
     	setRestaurantId();
     	loadDatabaseData();
 	}
@@ -93,16 +88,12 @@ public class DetailForm extends Activity {
 	}
     
 	private void setupViews() {
-		name    = (EditText) findViewById(R.id.name);
-		address = (EditText) findViewById(R.id.addr);
-		types   = (RadioGroup) findViewById(R.id.types);
-		notes   = (EditText) findViewById(R.id.notes);
-		feed    = (EditText) findViewById(R.id.feed);
-    }
-    
-    private void setupSaveButton() {
-    	Button save = (Button) findViewById(R.id.save);
-        save.setOnClickListener(onSave);
+		name     = (EditText) findViewById(R.id.name);
+		address  = (EditText) findViewById(R.id.addr);
+		types    = (RadioGroup) findViewById(R.id.types);
+		notes    = (EditText) findViewById(R.id.notes);
+		feed     = (EditText) findViewById(R.id.feed);
+		location = (TextView) findViewById(R.id.location);
     }
 
 	private void loadDatabaseData() {
@@ -117,6 +108,10 @@ public class DetailForm extends Activity {
 		address.setText(helper.getAddress(c));
 		notes.setText(helper.getNotes(c));
 		feed.setText(helper.getFeed(c));
+		
+		location.setText(String.valueOf(helper.getLatitude(c))
+			+ ", " + String.valueOf(helper.getLongitude(c))
+		);
 		
 		switch (helper.getType(c)) {
 			case SIT_DOWN:
@@ -182,6 +177,12 @@ public class DetailForm extends Activity {
 		NetworkInfo         info = cm.getActiveNetworkInfo();
 		
 		return (info != null);
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		save();
 	}
 	
     @Override
