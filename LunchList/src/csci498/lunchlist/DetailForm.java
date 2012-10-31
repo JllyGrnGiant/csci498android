@@ -33,6 +33,8 @@ public class DetailForm extends Activity {
 	private RestaurantHelper helper;
 	private String           restaurantId;
 	private LocationManager  locMgr;
+	private double           latitude;
+	private double           longitude;
 
 	LocationListener onLocationChange = new LocationListener() {
 		
@@ -66,6 +68,9 @@ public class DetailForm extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail_form);
+		
+		latitude  = 0;
+		longitude = 0;
 		
 		setupDatabaseHelper();
     	setupViews();
@@ -146,8 +151,11 @@ public class DetailForm extends Activity {
 		notes.setText(helper.getNotes(c));
 		feed.setText(helper.getFeed(c));
 		
-		location.setText(String.valueOf(helper.getLatitude(c))
-			+ ", " + String.valueOf(helper.getLongitude(c))
+		latitude  = helper.getLatitude(c);
+		longitude = helper.getLongitude(c);
+		
+		location.setText(String.valueOf(latitude)
+			+ ", " + String.valueOf(longitude)
 		);
 		
 		switch (helper.getType(c)) {
@@ -210,6 +218,15 @@ public class DetailForm extends Activity {
 			
 			return true;
 		}
+		else if (item.getItemId() == R.id.map) {
+			Intent i = new Intent(this, RestaurantMap.class);
+			i.putExtra(RestaurantMap.EXTRA_LATITUDE, latitude);
+			i.putExtra(RestaurantMap.EXTRA_LONGITUDE, longitude);
+			i.putExtra(RestaurantMap.EXTRA_NAME, name.getText().toString());
+			startActivity(i);
+			
+			return true;
+		}
 		
 		return super.onOptionsItemSelected(item);
 	}
@@ -218,6 +235,7 @@ public class DetailForm extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		if (restaurantId == null) {
 			menu.findItem(R.id.location).setEnabled(false);
+			menu.findItem(R.id.map).setEnabled(false);
 		}
 		
 		return super.onPrepareOptionsMenu(menu);
