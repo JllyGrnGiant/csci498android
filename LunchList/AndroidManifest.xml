@@ -44,17 +44,13 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         
-        <activity
-            android:name=".RestaurantMap">
-        </activity>
+        <activity android:name=".RestaurantMap"></activity>
         
-        <activity
-            android:name=".EditPreferences">
-        </activity>
+        <activity android:name=".EditPreferences"></activity>
         
-        <activity
-            android:name=".FeedActivity">
-        </activity>
+        <activity android:name=".FeedActivity"></activity>
+        
+        <activity android:name=".AlarmActivity"></activity>
         
         <service
             android:name=".FeedService">
@@ -71,6 +67,8 @@
         	</intent-filter>
             
         </receiver>
+        
+        <receiver android:name=".OnAlarmReceiver"></receiver>
                 
     </application>
 
