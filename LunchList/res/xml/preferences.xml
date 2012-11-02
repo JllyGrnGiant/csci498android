@@ -8,4 +8,16 @@
         android:entryValues="@array/sort_clauses"
         android:dialogTitle="@string/pref_dialog_title"/>
     
+    <CheckBoxPreference 
+        android:key="alarm"
+        android:title="Sound a Lunch Alarm"
+        android:summary="Check if you want to know when it is time for lunch" />
+    
+    <csci498.lunchlist.TimePreference
+        android:key="alarm_time"
+        android:title="Lunch Alarm Time"
+        android:defaultValue="12:00"
+        android:summary="Set your desired time for the lunch alarm"
+        android:dependency="alarm" />
+    
 </PreferenceScreen>
