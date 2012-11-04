@@ -40,8 +40,7 @@ public class EditPreferences extends PreferenceActivity {
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 			if ("alarm".equals(key)) {
 				boolean enabled = preferences.getBoolean(key, false);
-				int flag = enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED :
-					PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+				int flag = enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 				ComponentName component = new ComponentName(EditPreferences.this, OnBootReceiver.class);
 				
 				getPackageManager().setComponentEnabledSetting(component, flag, PackageManager.DONT_KILL_APP);

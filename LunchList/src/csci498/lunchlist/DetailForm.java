@@ -56,11 +56,10 @@ public class DetailForm extends Activity {
 		@Override
 		public void onLocationChanged(Location fix) {
 			helper.updateLocation(restaurantId, fix.getLatitude(), fix.getLongitude());
-			location.setText(String.valueOf(fix.getLatitude())
-				+ ", " + String.valueOf(fix.getLongitude()));
+			location.setText(String.valueOf(fix.getLatitude()) + ", " + String.valueOf(fix.getLongitude()));
 			locMgr.removeUpdates(onLocationChange);
 			
-			Toast.makeText(DetailForm.this, "Location saved", Toast.LENGTH_LONG).show();
+			Toast.makeText(DetailForm.this, getString(R.string.loc_saved), Toast.LENGTH_LONG).show();
 		}
 	};
 	

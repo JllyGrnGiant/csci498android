@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+/**
+ * OnBootReceiver starts an alarm for lunch on boot of the Android device.
+ */
 public class OnBootReceiver extends BroadcastReceiver {
 
 	@Override
@@ -18,10 +21,10 @@ public class OnBootReceiver extends BroadcastReceiver {
 	}
 	
 	public static void setAlarm(Context context) {
-		AlarmManager      manager     = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		Calendar          calendar    = Calendar.getInstance();
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		String            time        = preferences.getString("alarm_time", "12:00");
+		AlarmManager manager  = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		Calendar     calendar = Calendar.getInstance();
+		String       time     = preferences.getString("alarm_time", "12:00");
 		
 		calendar.set(Calendar.HOUR_OF_DAY, TimePreference.getHour(time));
 		calendar.set(Calendar.MINUTE, TimePreference.getMinute(time));

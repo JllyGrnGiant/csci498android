@@ -10,11 +10,15 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
+/**
+ * RestaurantMap uses Google's Map API to display the location of a
+ * restaurant on the map.
+ */
 public class RestaurantMap extends MapActivity {
 
-	public static final String EXTRA_LATITUDE="apt.tutorial.EXTRA_LATITUDE";
-	public static final String EXTRA_LONGITUDE="apt.tutorial.EXTRA_LONGITUDE";
-	public static final String EXTRA_NAME="apt.tutorial.EXTRA_NAME";
+	public static final String EXTRA_LATITUDE  = "apt.tutorial.EXTRA_LATITUDE";
+	public static final String EXTRA_LONGITUDE = "apt.tutorial.EXTRA_LONGITUDE";
+	public static final String EXTRA_NAME      = "apt.tutorial.EXTRA_NAME";
 
 	private MapView map;
 	

@@ -17,6 +17,8 @@
     <string name="notes">Notes</string>
     <string name="feed">Feed</string>
     <string name="save">Save</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
     
     <!-- Descriptions -->
     <string name="icon_desc">The icon used for the restaurant type</string>
@@ -31,5 +33,9 @@
 	<string name="pref_title">Sort Order</string>
 	<string name="pref_summary">Choose the order the list uses</string>
 	<string name="pref_dialog_title">Choose a sort order</string>
+	
+	<!-- Notification -->
+	<string name="loc_saved">Location saved</string>
+	<string name="lunch_time">It\'s time for lunch!</string>
 	
 </resources>

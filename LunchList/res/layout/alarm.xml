@@ -3,6 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content"
-    android:text="It's time for LUNCH!"
+    android:text="@string/lunch_time"
     android:textSize="30sp"
     android:textStyle="bold" />

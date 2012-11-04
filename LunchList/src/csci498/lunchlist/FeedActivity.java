@@ -14,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+/**
+ * FeedActivity displays information from an RSS feed found
+ * at a URL provided by the app user
+ */
 public class FeedActivity extends ListActivity {
 	
 	public static final String FEED_URL = "apt.tutorial.FEED_URL";

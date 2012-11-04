@@ -10,6 +10,9 @@ import android.os.Message;
 import android.os.Messenger;
 import android.util.Log;
 
+/**
+ * FeedService loads a feed at a given URL
+ */
 public class FeedService extends IntentService {
 	
 	public static final String EXTRA_URL       = "apt.tutorial.EXTRA_URL";
