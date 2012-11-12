@@ -8,9 +8,8 @@ import android.support.v4.app.FragmentActivity;
  * The LunchList activity provides a form for users to enter and store
  * restaurant information and displays that information in a list
  */
-@SuppressWarnings("deprecation")
 public class LunchList extends FragmentActivity implements LunchFragment.OnRestaurantListener {
-	public final static String ID_EXTRA = "csci498.lunchlist._id";
+	public final static String ID_EXTRA = "apt.tutorial._ID";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
