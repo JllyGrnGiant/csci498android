@@ -37,5 +37,6 @@
 	<!-- Notification -->
 	<string name="loc_saved">Location saved</string>
 	<string name="lunch_time">It\'s time for lunch!</string>
+	<string name="empty">No restaurants!</string>
 	
 </resources>
