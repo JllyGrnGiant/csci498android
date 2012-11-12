@@ -1,6 +1,5 @@
 package csci498.lunchlist;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
 

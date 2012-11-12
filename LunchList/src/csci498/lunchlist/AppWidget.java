@@ -21,23 +21,23 @@ public class AppWidget extends AppWidgetProvider {
 		}
 	}
 
-	@SuppressLint({ "NewApi", "NewApi" })
 	@SuppressWarnings("deprecation")
+	@SuppressLint({ "NewApi", "NewApi" })
 	private void onHCUpdate(Context ctxt, AppWidgetManager mgr, int[] appWidgetIds) {
 		for (int i = 0; i < appWidgetIds.length; ++i) {
 			Intent svcIntent = new Intent(ctxt, ListWidgetService.class);
 			
 			svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-			svcIntent.setData(Uri.parse(svcIntent.toURI()));
+			svcIntent.setData(Uri.parse(svcIntent.toUri(Intent.URI_INTENT_SCHEME)));
 			
 			RemoteViews widget = new RemoteViews(ctxt.getPackageName(), R.layout.widget);
-			widget.setRemoteAdapter(appWidgetIds[i], svcIntent);
+			widget.setRemoteAdapter(appWidgetIds[i], R.id.restaurants, svcIntent);
 			
 			Intent clickIntent = new Intent(ctxt, DetailForm.class);
 			PendingIntent clickPI = PendingIntent.getActivity(ctxt, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 			
 			widget.setPendingIntentTemplate(R.id.restaurants, clickPI);
-			mgr.updateAppWidget(appWidgetIds, widget);
+			mgr.updateAppWidget(appWidgetIds[i], widget);
 		}
 		
 		super.onUpdate(ctxt, mgr, appWidgetIds);
