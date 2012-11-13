@@ -29,6 +29,8 @@ import android.widget.Toast;
  */
 public class DetailFragment extends Fragment {
 	
+	private static final String ARG_REST_ID = "apt.tutorial.ARG_REST_ID";
+	
 	private EditText         name;
 	private EditText         address;
 	private EditText         notes;
@@ -60,7 +62,7 @@ public class DetailFragment extends Fragment {
 		
 		@Override
 		public void onLocationChanged(Location fix) {
-			helper.updateLocation(restaurantId, fix.getLatitude(), fix.getLongitude());
+			getHelper().updateLocation(restaurantId, fix.getLatitude(), fix.getLongitude());
 			location.setText(String.valueOf(fix.getLatitude()) + ", " + String.valueOf(fix.getLongitude()));
 			locMgr.removeUpdates(onLocationChange);
 			
@@ -70,15 +72,12 @@ public class DetailFragment extends Fragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.e("NOOO", "UUUU");
 		super.onCreate(savedInstanceState);
-		Log.e("NOOO", "EEEEEEEE");
 		setHasOptionsMenu(true);
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.e("NOOO", "AAAAA");
 		super.onActivityCreated(savedInstanceState);
 		
 		latitude  = 0;
@@ -86,20 +85,40 @@ public class DetailFragment extends Fragment {
 		
     	setupViews();
     	setupLocationManager();
+    	
+    	Bundle args = getArguments();
+    	if (args != null) {
+    		loadRestaurant(args.getString(ARG_REST_ID));
+    	}
 	}
 	
-	@Override
-	public void onResume() {
-		super.onResume();
+	public RestaurantHelper getHelper() {		
+		if (helper == null) {
+			helper = new RestaurantHelper(getActivity());
+		}
+
+		return helper;
+	}
+	
+	public void loadRestaurant(String restaurantId) {
+		this.restaurantId = restaurantId;
+		if (restaurantId != null) {
+			loadDatabaseData();
+		}
+	}
+	
+	public static DetailFragment newInstance(long id) {
+		DetailFragment result = new DetailFragment();
 		
-		setupDatabaseHelper();
-		setRestaurantId();
-		loadDatabaseData();
+		Bundle args = new Bundle();
+		args.putString(ARG_REST_ID, String.valueOf(id));
+		result.setArguments(args);
+		
+		return result;
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Log.e("NOOO", "OOOOO");
 		return inflater.inflate(R.layout.detail_form, container, false);
 	}
 	
@@ -108,12 +127,12 @@ public class DetailFragment extends Fragment {
 			Restaurant save = getRestaurantToSave();
 			
 			if (restaurantId == null) {
-				helper.insert(save.getName(), save.getAddress(),
+				getHelper().insert(save.getName(), save.getAddress(),
 					save.getType(), save.getNotes(),
 					feed.getText().toString());
 			}
 			else {
-				helper.update(restaurantId, save.getName(),
+				getHelper().update(restaurantId, save.getName(),
 					save.getAddress(), save.getType(),
 					save.getNotes(), feed.getText().toString());
 			}
@@ -148,10 +167,6 @@ public class DetailFragment extends Fragment {
 	private void setRestaurantId() {
 		restaurantId = getActivity().getIntent().getStringExtra(LunchList.ID_EXTRA);
 	}
-
-	private void setupDatabaseHelper() {
-    	helper = new RestaurantHelper(getActivity());
-	}
     
 	private void setupViews() {
 		name     = (EditText) getActivity().findViewById(R.id.name);
@@ -167,22 +182,22 @@ public class DetailFragment extends Fragment {
 			return;
 		}
 		
-		Cursor c = helper.getById(restaurantId);
+		Cursor c = getHelper().getById(restaurantId);
 		c.moveToFirst();
 		
-		name.setText(helper.getName(c));
-		address.setText(helper.getAddress(c));
-		notes.setText(helper.getNotes(c));
-		feed.setText(helper.getFeed(c));
+		name.setText(getHelper().getName(c));
+		address.setText(getHelper().getAddress(c));
+		notes.setText(getHelper().getNotes(c));
+		feed.setText(getHelper().getFeed(c));
 		
-		latitude  = helper.getLatitude(c);
-		longitude = helper.getLongitude(c);
+		latitude  = getHelper().getLatitude(c);
+		longitude = getHelper().getLongitude(c);
 		
 		location.setText(String.valueOf(latitude)
 			+ ", " + String.valueOf(longitude)
 		);
 		
-		switch (helper.getType(c)) {
+		switch (getHelper().getType(c)) {
 			case SIT_DOWN:
 				types.check(R.id.sit_down);
 				break;
@@ -264,6 +279,6 @@ public class DetailFragment extends Fragment {
 		super.onPause();
 		save();
 		locMgr.removeUpdates(onLocationChange);
-		helper.close();
+		getHelper().close();
 	}
 }
