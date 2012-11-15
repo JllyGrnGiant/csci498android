@@ -26,5 +26,12 @@
         android:defaultValue="true"
         android:summary="Check if you want a status bar icon at lunchtime, or uncheck for a full-screen notice"
         android:dependency="alarm"/>
+    
+    <RingtonePreference 
+        android:key="alarm_ringtone"
+        android:title="Alarm Ringtone"
+        android:summary="Indicate the ringtone to play when it is lunchtime"
+        android:showSilent="true"
+        android:dependency="alarm"/>
 
 </PreferenceScreen>
