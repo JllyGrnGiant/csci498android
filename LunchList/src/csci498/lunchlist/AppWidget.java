@@ -21,8 +21,8 @@ public class AppWidget extends AppWidgetProvider {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@SuppressLint({ "NewApi", "NewApi" })
+	@SuppressWarnings("deprecation")
 	private void onHCUpdate(Context ctxt, AppWidgetManager mgr, int[] appWidgetIds) {
 		for (int i = 0; i < appWidgetIds.length; ++i) {
 			Intent svcIntent = new Intent(ctxt, ListWidgetService.class);

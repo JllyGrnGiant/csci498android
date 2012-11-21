@@ -39,6 +39,14 @@
 	    </TableRow>
 	    
 	    <TableRow>
+	        
+	        <TextView android:text="Phone:"/>
+	        
+	        <EditText android:id="@+id/phone" android:inputType="phone"/>
+	        
+	    </TableRow>
+	    
+	    <TableRow>
 
 	        <TextView
 	            android:layout_width="wrap_content"

@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class DetailFragment extends Fragment {
 	
 	private EditText         name;
 	private EditText         address;
+	private EditText         phone;
 	private EditText         notes;
 	private EditText         feed;
 	private TextView         location;
@@ -129,12 +131,12 @@ public class DetailFragment extends Fragment {
 			if (restaurantId == null) {
 				getHelper().insert(save.getName(), save.getAddress(),
 					save.getType(), save.getNotes(),
-					feed.getText().toString());
+					feed.getText().toString(), phone.getText().toString());
 			}
 			else {
 				getHelper().update(restaurantId, save.getName(),
 					save.getAddress(), save.getType(),
-					save.getNotes(), feed.getText().toString());
+					save.getNotes(), feed.getText().toString(), phone.getText().toString());
 			}
 		}
 	}
@@ -172,6 +174,7 @@ public class DetailFragment extends Fragment {
 		name     = (EditText) getActivity().findViewById(R.id.name);
 		address  = (EditText) getActivity().findViewById(R.id.addr);
 		types    = (RadioGroup) getActivity().findViewById(R.id.types);
+		phone    = (EditText) getActivity().findViewById(R.id.phone);
 		notes    = (EditText) getActivity().findViewById(R.id.notes);
 		feed     = (EditText) getActivity().findViewById(R.id.feed);
 		location = (TextView) getActivity().findViewById(R.id.location);
@@ -189,6 +192,7 @@ public class DetailFragment extends Fragment {
 		address.setText(getHelper().getAddress(c));
 		notes.setText(getHelper().getNotes(c));
 		feed.setText(getHelper().getFeed(c));
+		phone.setText(getHelper().getPhone(c));
 		
 		latitude  = getHelper().getLatitude(c);
 		longitude = getHelper().getLongitude(c);
@@ -255,6 +259,13 @@ public class DetailFragment extends Fragment {
 			
 			return true;
 		}
+		else if (item.getItemId() == R.id.call) {
+			String toDial = "tel:" + phone.getText().toString();
+			
+			if (toDial.length() > 4) {
+				startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(toDial)));
+			}
+		}
 		
 		return super.onOptionsItemSelected(item);
 	}
@@ -265,6 +276,10 @@ public class DetailFragment extends Fragment {
 			menu.findItem(R.id.location).setEnabled(false);
 			menu.findItem(R.id.map).setEnabled(false);
 		}
+		
+		if (isTelephonyAvailable()) {
+			menu.findItem(R.id.call).setEnabled(true);
+		}
 	}
 	
 	private boolean isNetworkAvailable() {
@@ -272,6 +287,10 @@ public class DetailFragment extends Fragment {
 		NetworkInfo         info = cm.getActiveNetworkInfo();
 		
 		return (info != null);
+	}
+	
+	private boolean isTelephonyAvailable() {
+		return getActivity().getPackageManager().hasSystemFeature("android.hardware.telephony");
 	}
 	
 	@Override
